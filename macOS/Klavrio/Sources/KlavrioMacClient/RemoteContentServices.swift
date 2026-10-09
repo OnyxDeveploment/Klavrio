@@ -10,24 +10,52 @@ struct AppUpdateResult {
 }
 
 private struct AppUpdateManifest: Decodable {
+    let platform: String?
     let version: String
+    let url: String?
     let downloadUrl: String?
     let releaseNotesUrl: String?
 }
 
+private struct GitHubFileContent: Decodable {
+    let encoding: String
+    let content: String
+}
+
 enum ReleaseUpdateService {
     static func check(manifestURL value: String) async throws -> AppUpdateResult {
-        let url = try requireHTTPS(value, field: "update manifest")
+        let url = try resolveRepositoryManifestURL(value)
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 8)
         request.setValue("Klavrio-UpdateChecker/1.0.0", forHTTPHeaderField: "User-Agent")
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else {
             throw KlavrioError.operation("The update server returned an error.")
         }
-        guard data.count <= 65_536 else { throw KlavrioError.invalidData("The update manifest is larger than 64 KB.") }
-        let manifest = try JSONDecoder().decode(AppUpdateManifest.self, from: data)
+        let usesContentsAPI = url.host?.lowercased() == "api.github.com" && url.path.contains("/contents/")
+        guard data.count <= (usesContentsAPI ? 131_072 : 65_536) else {
+            throw KlavrioError.invalidData("The update manifest response is too large.")
+        }
+        let manifestData: Data
+        if usesContentsAPI {
+            let file = try JSONDecoder().decode(GitHubFileContent.self, from: data)
+            guard file.encoding.lowercased() == "base64",
+                  let decoded = Data(base64Encoded: file.content, options: .ignoreUnknownCharacters) else {
+                throw KlavrioError.invalidData("GitHub returned invalid update-manifest content.")
+            }
+            manifestData = decoded
+        } else {
+            manifestData = data
+        }
+        guard manifestData.count <= 65_536 else { throw KlavrioError.invalidData("The update manifest is larger than 64 KB.") }
+        let manifest = try JSONDecoder().decode(AppUpdateManifest.self, from: manifestData)
+        guard manifest.platform == nil || manifest.platform == "macos-universal" else {
+            throw KlavrioError.invalidData("This update is for a different operating system.")
+        }
         let current = LocalDiagnostics.appVersion
-        let download = try optionalHTTPS(manifest.downloadUrl, field: "downloadUrl")
+        let download = try optionalHTTPS(manifest.url ?? manifest.downloadUrl, field: "url")
+        if download?.pathExtension.lowercased() == "exe" {
+            throw KlavrioError.invalidData("This update is for Windows, not macOS.")
+        }
         let notes = try optionalHTTPS(manifest.releaseNotesUrl, field: "releaseNotesUrl")
         return .init(
             available: compareVersions(manifest.version, current) == .orderedDescending,
@@ -37,6 +65,23 @@ enum ReleaseUpdateService {
             releaseNotesURL: notes
         )
     }
+}
+
+private func resolveRepositoryManifestURL(_ value: String) throws -> URL {
+    let url = try requireHTTPS(value, field: "update manifest")
+    let parts = url.path.split(separator: "/").map(String.init)
+    guard url.host?.lowercased() == "github.com",
+          parts.count == 3,
+          parts[2].lowercased().hasSuffix(".json") else { return url }
+
+    var resolved = URLComponents()
+    resolved.scheme = "https"
+    resolved.host = "api.github.com"
+    resolved.path = "/repos/\(parts[0])/\(parts[1])/contents/\(parts[2])"
+    guard let result = resolved.url else {
+        throw KlavrioError.invalidData("The update manifest URL is invalid.")
+    }
+    return result
 }
 
 struct DictionaryUpdateResult {

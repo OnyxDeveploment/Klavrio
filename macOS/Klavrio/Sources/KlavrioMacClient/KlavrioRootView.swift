@@ -155,9 +155,6 @@ private struct FixTextPage: View {
 private struct SettingsPage: View {
     @ObservedObject var controller: KlavrioCoordinator
     @Binding var showingRestore: Bool
-    @State private var githubURL = ""
-    @State private var updateURL = ""
-    @State private var dictionaryURL = ""
     private var l: Localizer { controller.localizer }
 
     var body: some View {
@@ -194,19 +191,21 @@ private struct SettingsPage: View {
             SectionHeading(l["communityUpdates"], icon: "person.3", subtitle: l["communityHelp"])
             Toggle(l["checkWordsOnOpen"], isOn: Binding(get: { controller.settings.checkDictionaryUpdatesOnStartup }, set: controller.setCheckDictionaryUpdates)).padding(.vertical, 8)
             HStack {
-                TextField("https://github.com/OWNER/REPO/.../dictionary-manifest.json", text: $dictionaryURL).textFieldStyle(.roundedBorder).environment(\.layoutDirection, .leftToRight)
-                    .onSubmit { controller.setDictionaryManifestURL(dictionaryURL) }
-                Button(l["updateWords"]) { controller.setDictionaryManifestURL(dictionaryURL); Task { await controller.checkDictionaryUpdates() } }.buttonStyle(PrimaryButtonStyle())
+                ReadOnlyURLField(KlavrioLinks.dictionaryFeed)
+                Button(l["updateWords"]) { Task { await controller.checkDictionaryUpdates() } }.buttonStyle(PrimaryButtonStyle())
             }
-            Text(controller.dictionarySummary).font(.caption).foregroundStyle(.secondary).padding(.top, 5)
+            HStack {
+                Text(controller.dictionarySummary).font(.caption).foregroundStyle(.secondary)
+                Spacer()
+                Button(l["contributeWords"], action: controller.openContributionGuide).buttonStyle(.link)
+            }.padding(.top, 5)
         }
         Card {
             SectionHeading(l["updates"], icon: "arrow.triangle.2.circlepath", subtitle: l["updatesHelp"])
             Toggle(l["checkOnOpen"], isOn: Binding(get: { controller.settings.checkUpdatesOnStartup }, set: controller.setCheckUpdates)).padding(.vertical, 8)
             HStack {
-                TextField("https://example.com/klavrio-update.json", text: $updateURL).textFieldStyle(.roundedBorder).environment(\.layoutDirection, .leftToRight)
-                    .onSubmit { controller.setUpdateManifestURL(updateURL) }
-                Button(l["checkNow"]) { controller.setUpdateManifestURL(updateURL); Task { await controller.checkForUpdates() } }.buttonStyle(PrimaryButtonStyle())
+                ReadOnlyURLField(KlavrioLinks.updateFeed)
+                Button(l["checkNow"]) { Task { await controller.checkForUpdates() } }.buttonStyle(PrimaryButtonStyle())
             }
             HStack { Text(controller.updateSummary).font(.caption).foregroundStyle(.secondary); Spacer(); if controller.updateURL != nil { Button(l["openUpdate"], action: controller.openAvailableUpdate) } }.padding(.top, 5)
         }
@@ -221,21 +220,30 @@ private struct SettingsPage: View {
         Card {
             SectionHeading(l["project"], icon: "link", subtitle: l["projectHelp"])
             HStack {
-                TextField("https://github.com/owner/Klavrio", text: $githubURL).textFieldStyle(.roundedBorder).environment(\.layoutDirection, .leftToRight)
-                    .onSubmit { controller.setGitHubURL(githubURL) }
-                Button(l["openGitHub"]) { controller.setGitHubURL(githubURL); controller.openGitHub() }.buttonStyle(PrimaryButtonStyle())
+                ReadOnlyURLField(KlavrioLinks.project)
+                Button(l["openGitHub"], action: controller.openGitHub).buttonStyle(PrimaryButtonStyle())
             }.padding(.top, 12)
         }
-        .onAppear {
-            refreshFields(controller.settings)
-        }
-        .onChange(of: controller.settings) { refreshFields($0) }
     }
+}
 
-    private func refreshFields(_ settings: AppSettings) {
-        githubURL = settings.githubURL
-        updateURL = settings.updateManifestURL
-        dictionaryURL = settings.dictionaryManifestURL
+private struct ReadOnlyURLField: View {
+    let value: String
+
+    init(_ value: String) { self.value = value }
+
+    var body: some View {
+        Text(value)
+            .font(.system(.body, design: .monospaced))
+            .lineLimit(1)
+            .truncationMode(.middle)
+            .textSelection(.enabled)
+            .environment(\.layoutDirection, .leftToRight)
+            .frame(maxWidth: .infinity, minHeight: 22, alignment: .leading)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 6))
+            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.primary.opacity(0.2)))
     }
 }
 

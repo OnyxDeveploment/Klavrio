@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Klavrio fixes text typed with the wrong keyboard layout on Windows and macOS—locally, quickly, and without retyping.">
+  <meta name="author" content="onyxdeveploment">
+  <meta name="application-name" content="Klavrio">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#07111f">
+  <meta property="og:title" content="Klavrio — Fix the wrong keyboard layout">
+  <meta property="og:description" content="Correct English, Hebrew, Arabic, Russian, German, and French keyboard-layout mistakes locally—without retyping.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://klavrio.app/">
+  <meta property="og:site_name" content="Klavrio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://klavrio.app/assets/klavrio-mark.png">
+  <meta property="og:image:width" content="1254">
+  <meta property="og:image:height" content="1254">
+  <meta property="og:image:alt" content="Klavrio keyboard-layout correction logo">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Klavrio — Fix the wrong keyboard layout">
+  <meta name="twitter:description" content="Correct keyboard-layout mistakes locally on Windows and macOS—without retyping.">
+  <meta name="twitter:image" content="https://klavrio.app/assets/klavrio-mark.png">
+  <title>Klavrio — Keyboard layout correction for Windows and macOS</title>
+  <link rel="canonical" href="https://klavrio.app/">
+  <link rel="icon" href="assets/klavrio-mark.png" type="image/png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://klavrio.app/#software",
+    "name": "Klavrio",
+    "alternateName": "Klavrio Keyboard Layout Correction",
+    "description": "A privacy-focused utility that corrects text typed with the wrong keyboard layout without requiring the user to retype it.",
+    "applicationCategory": "UtilitiesApplication",
+    "applicationSubCategory": "Keyboard layout correction",
+    "operatingSystem": "Windows 10, Windows 11, macOS 13 or later",
+    "softwareVersion": "1.0.0.1",
+    "url": "https://klavrio.app/",
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://github.com/OnyxDeveploment/Klavrio/releases/latest"
+    },
+    "downloadUrl": "https://github.com/OnyxDeveploment/Klavrio/releases/latest",
+    "releaseNotes": "https://github.com/OnyxDeveploment/Klavrio/releases",
+    "codeRepository": "https://github.com/OnyxDeveploment/Klavrio",
+    "license": "https://github.com/OnyxDeveploment/Klavrio/blob/main/LICENSE",
+    "image": "https://klavrio.app/assets/klavrio-mark.png",
+    "featureList": [
+      "Automatic keyboard-layout correction",
+      "Selected-text conversion with a global shortcut",
+      "English, Hebrew, Arabic, Russian, German, and French layouts",
+      "Offline text processing",
+      "Custom and community dictionaries"
+    ],
+    "inLanguage": ["en", "he", "ar", "ru", "de", "fr"],
+    "author": {
+      "@type": "Person",
+      "name": "onyxdeveploment",
+      "url": "https://github.com/OnyxDeveploment"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Klavrio send what I type anywhere?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Text correction runs locally. Requests to the official update feeds do not include typed or selected text." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Klavrio fix text written before it was opened?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the existing text in another application and press the configured selected-text shortcut." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Klavrio a spelling or grammar checker?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Klavrio repairs keyboard-layout mistakes and avoids rewriting uncertain text." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I add my own words?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. User dictionaries are stored separately, load after bundled data, and are not replaced by application updates." }
+      }
+    ]
+  }
+  </script>
+  <script src="site-config.js"></script>
+  <script src="app.js" defer></script>
+  <script src="analytics.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Klavrio home">
+      <img src="assets/klavrio-mark.png" alt="" width="40" height="40">
+      <span>Klavrio</span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle>
+      <span class="sr-only">Open navigation</span>
+      <span></span><span></span>
+    </button>
+
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation" data-menu>
+      <a href="#workflow">How it works</a>
+      <a href="#playground">Try it</a>
+      <a href="#features">Features</a>
+      <a href="#download">Get Klavrio</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+
+    <button class="theme-toggle" type="button" aria-label="Switch color theme" data-theme-toggle>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+    </button>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero section-shell">
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow"><span></span> Local keyboard intelligence</p>
+        <h1>Fix the layout.<br><em>Keep the thought.</em></h1>
+        <p class="hero-lead">Klavrio repairs text typed with the wrong keyboard layout—while you type or long after. No cloud processing. No account. No starting over.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#download">Get Klavrio</a>
+          <a class="button button-quiet" href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+          <a class="button button-quiet" href="#playground">Try the layout lab <span aria-hidden="true">↓</span></a>
+          <button class="button button-quiet" type="button" data-share>Share Klavrio <span aria-hidden="true">↗</span></button>
+          <span class="share-feedback" role="status" aria-live="polite" data-share-feedback></span>
+        </div>
+        <ul class="hero-facts" aria-label="Key facts">
+          <li><strong>6</strong> layouts</li>
+          <li><strong>100%</strong> local text processing</li>
+          <li><strong>2</strong> correction workflows</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-label="Example of Klavrio correcting text" data-reveal>
+        <div class="visual-glow"></div>
+        <article class="correction-console">
+          <header>
+            <span class="status-light"></span>
+            <span>Correction monitor</span>
+            <span class="console-state">ACTIVE</span>
+          </header>
+          <div class="console-body">
+            <div class="layout-route">
+              <span class="layout-chip">EN</span>
+              <span class="route-line"><i></i></span>
+              <span class="layout-chip is-active">עב</span>
+            </div>
+            <p class="console-label">Input detected</p>
+            <p class="wrong-text">nv t,v eurt</p>
+            <div class="correction-pulse" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p class="console-label">Corrected locally</p>
+            <p class="right-text" dir="rtl">מה אתה קורא</p>
+          </div>
+          <footer>
+            <span>Ctrl + Alt + Space</span>
+            <span>Toggle automatic correction</span>
+          </footer>
+        </article>
+        <div class="floating-note note-top"><strong>Offline</strong><span>Text stays on device</span></div>
+        <div class="floating-note note-bottom"><strong>Ready</strong><span>English → Hebrew</span></div>
+      </div>
+    </section>
+
+    <section class="trust-bar" aria-label="Supported platforms and languages">
+      <p>Built for real multilingual work</p>
+      <div class="trust-items">
+        <span>Windows 10/11</span><i></i><span>macOS 13+</span><i></i><span>English</span><span>עברית</span><span>العربية</span><span>Русский</span><span>Deutsch</span><span>Français</span>
+      </div>
+    </section>
+
+    <section id="workflow" class="workflow section-shell">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow"><span></span> One interruption, removed</p>
+        <h2>Your hands stay on the keyboard.</h2>
+        <p>Klavrio has a quiet background mode for everyday typing and a deliberate shortcut for text that already exists.</p>
+      </div>
+
+      <div class="workflow-grid">
+        <article class="workflow-card" data-reveal>
+          <span class="step-number">01</span>
+          <div class="step-icon" aria-hidden="true">⌁</div>
+          <h3>Notice</h3>
+          <p>The bounded word before Space is checked against local dictionaries and reviewed mappings.</p>
+        </article>
+        <article class="workflow-card featured" data-reveal>
+          <span class="step-number">02</span>
+          <div class="step-icon" aria-hidden="true">⌘</div>
+          <h3>Decide</h3>
+          <p>Conservative confidence rules protect valid text. Ambiguous words are left alone.</p>
+        </article>
+        <article class="workflow-card" data-reveal>
+          <span class="step-number">03</span>
+          <div class="step-icon" aria-hidden="true">↻</div>
+          <h3>Repair</h3>
+          <p>A safe match is replaced in place. Existing selected text can be converted with your global shortcut.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="playground" class="playground">
+      <div class="section-shell playground-grid">
+        <div class="playground-copy" data-reveal>
+          <p class="eyebrow"><span></span> Layout lab</p>
+          <h2>See the keys underneath the text.</h2>
+          <p>This browser demo performs a direct physical-key conversion. The desktop app adds dictionaries, reviewed exact pairs, phonetic matching, and confidence checks.</p>
+          <div class="sample-list" aria-label="Demo examples">
+            <button type="button" data-sample="nv t,v eurt" data-target="he">Hebrew example</button>
+            <button type="button" data-sample="sghl" data-target="ar">Arabic example</button>
+            <button type="button" data-sample="ghbdtn" data-target="ru">Russian example</button>
+          </div>
+        </div>
+
+        <div class="layout-lab" data-reveal>
+          <div class="lab-toolbar">
+            <label for="target-layout">Convert physical keys to</label>
+            <select id="target-layout" data-layout-select>
+              <option value="he">Hebrew</option>
+              <option value="ar">Arabic</option>
+              <option value="ru">Russian</option>
+              <option value="de">German</option>
+              <option value="fr">French</option>
+            </select>
+          </div>
+          <label class="field-label" for="layout-input">Text typed on an English layout</label>
+          <textarea id="layout-input" rows="4" spellcheck="false" data-layout-input>nv t,v eurt</textarea>
+          <div class="lab-divider"><span>local preview</span></div>
+          <div class="lab-result" tabindex="0" data-layout-output dir="auto">מה אתה קורא</div>
+          <div class="lab-actions">
+            <button class="button button-primary" type="button" data-convert>Convert keys</button>
+            <button class="button button-quiet" type="button" data-copy>Copy result</button>
+            <span class="lab-feedback" role="status" aria-live="polite" data-feedback></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features section-shell">
+      <div class="section-heading centered" data-reveal>
+        <p class="eyebrow"><span></span> Designed to stay out of the way</p>
+        <h2>Small utility. Serious details.</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-panel feature-wide" data-reveal>
+          <div>
+            <span class="feature-kicker">Already typed it?</span>
+            <h3>Select. Shortcut. Done.</h3>
+            <p>Open Klavrio after the mistake, select the old text in another app, and use a customizable global shortcut.</p>
+          </div>
+          <div class="shortcut-visual" aria-label="Default selected text shortcut">
+            <kbd>Ctrl</kbd><b>+</b><kbd>Shift</kbd><b>+</b><kbd>Space</kbd>
+          </div>
+        </article>
+
+        <article class="feature-panel" data-reveal>
+          <span class="feature-kicker">Control</span>
+          <h3>Two custom shortcuts</h3>
+          <p>Convert selected text or toggle automatic correction from anywhere.</p>
+          <div class="mini-toggle"><i></i><span>Automatic correction</span><strong>ON</strong></div>
+        </article>
+
+        <article class="feature-panel" data-reveal>
+          <span class="feature-kicker">Community data</span>
+          <h3>Dictionaries that can grow</h3>
+          <p>Suggest words through a pull request. Only reviewed and merged changes are packaged, versioned, and verified by HTTPS, SHA-256, size, filename, and UTF-8 checks.</p>
+          <a class="feature-link" href="https://github.com/OnyxDeveploment/Klavrio/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute words <span aria-hidden="true">→</span></a>
+          <div class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+
+        <article class="feature-panel feature-dark" data-reveal>
+          <span class="feature-kicker">Privacy</span>
+          <h3>Your words are not telemetry.</h3>
+          <p>Typed and selected text are not written to diagnostics. Correction happens locally with no account or cloud text API.</p>
+          <a href="privacy.html">Read the privacy notes <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section id="download" class="download-section">
+      <div class="section-shell download-shell" data-reveal>
+        <div class="download-copy">
+          <p class="eyebrow"><span></span> Klavrio 1.0</p>
+          <h2>Make the keyboard<br>follow your language.</h2>
+          <p>Choose your platform. Both cards open the latest release on the official Klavrio GitHub repository.</p>
+        </div>
+
+        <div class="platform-list">
+          <a class="platform-card" href="../README.md#build" data-platform="windows">
+            <span class="platform-icon" aria-hidden="true">⊞</span>
+            <span><strong>Windows</strong><small>Windows 10/11 · x64 · .NET 8</small></span>
+            <span class="platform-action">Build guide →</span>
+          </a>
+          <a class="platform-card" href="../macOS/Klavrio/README.md#build-and-test" data-platform="macos">
+            <span class="platform-icon apple" aria-hidden="true">◆</span>
+            <span><strong>macOS</strong><small>macOS 13+ · Apple silicon &amp; Intel</small></span>
+            <span class="platform-action">Build guide →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq section-shell">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow"><span></span> Quick answers</p>
+        <h2>Before you install.</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <details>
+          <summary>Does Klavrio send what I type anywhere?</summary>
+          <p>No. Text correction is local. Network access is limited to the official read-only dictionary and application-update feeds; neither request includes your text, and both checks can be disabled.</p>
+        </details>
+        <details>
+          <summary>Can it fix text written before Klavrio was open?</summary>
+          <p>Yes. Select the existing text in another app and press the selected-text shortcut. Klavrio does not need a previous keystroke history.</p>
+        </details>
+        <details>
+          <summary>Is it a spelling or grammar checker?</summary>
+          <p>No. Klavrio repairs keyboard-layout mistakes. It intentionally avoids rewriting uncertain text.</p>
+        </details>
+        <details>
+          <summary>Can I add my own words?</summary>
+          <p>Yes. Personal dictionaries stay local and load last. To share words with everyone, follow the <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">contribution guide</a> and open a pull request for review.</p>
+        </details>
+        <details>
+          <summary>How are Windows updates installed?</summary>
+          <p>Klavrio reads the version and executable URL from its read-only <code>klavrio-update.json</code>. After you approve an available update, it verifies the GitHub asset's size, SHA-256, and embedded version, keeps a rollback copy, replaces the executable, and restarts.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <img src="assets/klavrio-mark.png" alt="" width="34" height="34">
+      <div><strong>Klavrio</strong><span>Keyboard layout correction</span></div>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/THIRD_PARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">Credits</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute</a>
+      <button class="footer-link" type="button" data-analytics-settings hidden>Analytics settings</button>
+      <a href="#top">Back to top ↑</a>
+    </nav>
+    <p>© 2026 OnyxDeveploment. Klavrio is source-available for noncommercial use.</p>
+  </footer>
+</body>
+</html>

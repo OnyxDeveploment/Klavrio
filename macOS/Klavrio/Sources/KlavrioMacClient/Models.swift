@@ -72,18 +72,27 @@ struct HotkeyBinding: Codable, Equatable {
     }
 }
 
+enum KlavrioLinks {
+    static let project = "https://github.com/OnyxDeveploment/Klavrio"
+    static let contribute = project + "/blob/main/CONTRIBUTING.md"
+    static let dictionaryFeed = "https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json"
+    static let updateFeed = "https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json"
+}
+
 struct AppSettings: Codable, Equatable {
+    private static let currentSchemaVersion = 2
+    var schemaVersion = 2
     var automaticCorrectionEnabled = false
     var startAtLogin = false
     var selectionMode = SelectionDirection.auto
     var uiLanguage = "en"
     var theme = AppTheme.dark
-    var githubURL = "https://github.com/"
+    var githubURL = KlavrioLinks.project
     var checkUpdatesOnStartup = true
-    var updateManifestURL = ""
+    var updateManifestURL = KlavrioLinks.updateFeed
     var lastUpdateCheckUTC: Date?
     var checkDictionaryUpdatesOnStartup = true
-    var dictionaryManifestURL = ""
+    var dictionaryManifestURL = KlavrioLinks.dictionaryFeed
     var installedDictionaryVersion = ""
     var lastDictionaryUpdateCheckUTC: Date?
     var selectionHotkey = HotkeyBinding.selectionDefault
@@ -92,7 +101,7 @@ struct AppSettings: Codable, Equatable {
     init() { }
 
     private enum CodingKeys: String, CodingKey {
-        case automaticCorrectionEnabled, startAtLogin, selectionMode, uiLanguage, theme, githubURL
+        case schemaVersion, automaticCorrectionEnabled, startAtLogin, selectionMode, uiLanguage, theme, githubURL
         case checkUpdatesOnStartup, updateManifestURL, lastUpdateCheckUTC
         case checkDictionaryUpdatesOnStartup, dictionaryManifestURL, installedDictionaryVersion, lastDictionaryUpdateCheckUTC
         case selectionHotkey, toggleHotkey
@@ -100,21 +109,25 @@ struct AppSettings: Codable, Equatable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        let storedSchemaVersion = try values.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 0
+        schemaVersion = Self.currentSchemaVersion
         automaticCorrectionEnabled = try values.decodeIfPresent(Bool.self, forKey: .automaticCorrectionEnabled) ?? false
         startAtLogin = try values.decodeIfPresent(Bool.self, forKey: .startAtLogin) ?? false
         selectionMode = try values.decodeIfPresent(SelectionDirection.self, forKey: .selectionMode) ?? .auto
         uiLanguage = try values.decodeIfPresent(String.self, forKey: .uiLanguage) ?? "en"
         theme = try values.decodeIfPresent(AppTheme.self, forKey: .theme) ?? .dark
-        githubURL = try values.decodeIfPresent(String.self, forKey: .githubURL) ?? "https://github.com/"
+        githubURL = KlavrioLinks.project
         checkUpdatesOnStartup = try values.decodeIfPresent(Bool.self, forKey: .checkUpdatesOnStartup) ?? true
-        updateManifestURL = try values.decodeIfPresent(String.self, forKey: .updateManifestURL) ?? ""
+        updateManifestURL = KlavrioLinks.updateFeed
         lastUpdateCheckUTC = try values.decodeIfPresent(Date.self, forKey: .lastUpdateCheckUTC)
         checkDictionaryUpdatesOnStartup = try values.decodeIfPresent(Bool.self, forKey: .checkDictionaryUpdatesOnStartup) ?? true
-        dictionaryManifestURL = try values.decodeIfPresent(String.self, forKey: .dictionaryManifestURL) ?? ""
+        dictionaryManifestURL = KlavrioLinks.dictionaryFeed
         installedDictionaryVersion = try values.decodeIfPresent(String.self, forKey: .installedDictionaryVersion) ?? ""
         lastDictionaryUpdateCheckUTC = try values.decodeIfPresent(Date.self, forKey: .lastDictionaryUpdateCheckUTC)
         selectionHotkey = try values.decodeIfPresent(HotkeyBinding.self, forKey: .selectionHotkey) ?? .selectionDefault
         toggleHotkey = try values.decodeIfPresent(HotkeyBinding.self, forKey: .toggleHotkey) ?? .toggleDefault
+
+        _ = storedSchemaVersion
     }
 }
 

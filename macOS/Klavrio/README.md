@@ -56,4 +56,4 @@ Bundled dictionaries are copied from the repository's root `Data` folder during 
 
 ## Update manifests
 
-App and dictionary update URLs are intentionally empty by default. Add the HTTPS URLs in Klavrio Settings when the GitHub release endpoints are ready. Downloads are size-limited; dictionary packages require the SHA-256 declared in the manifest and are validated before activation.
+The community-dictionary and application-update feeds use fixed, read-only Klavrio GitHub release manifests. Each check can be disabled in Settings, but installed clients cannot be redirected to another feed there. Downloads are size-limited; dictionary packages require the SHA-256 declared in the manifest and are validated before activation. Application updates are metadata-only and open the release page instead of downloading or installing a binary.

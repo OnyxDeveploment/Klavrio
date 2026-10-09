@@ -15,10 +15,10 @@
     <Company>OnyxDeveploment</Company>
     <Authors>OnyxDeveploment</Authors>
     <Copyright>Copyright © 2026 OnyxDeveploment</Copyright>
-    <Version>1.0.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <InformationalVersion>1.0.0.0</InformationalVersion>
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <InformationalVersion>1.0.0.1</InformationalVersion>
     <ApplicationIcon>Assets\Klavrio.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
@@ -26,6 +26,10 @@
     <Content Include="LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="THIRD_PARTY_NOTICES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="ThirdParty\*.*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <EmbeddedResource Include="Data\*.*" LogicalName="Klavrio.BundledData.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="LICENSE" LogicalName="Klavrio.Legal.LICENSE" />
+    <EmbeddedResource Include="THIRD_PARTY_NOTICES.txt" LogicalName="Klavrio.Legal.THIRD_PARTY_NOTICES.txt" />
+    <EmbeddedResource Include="ThirdParty\*.*" LogicalName="Klavrio.Legal.ThirdParty.%(Filename)%(Extension)" />
     <EmbeddedResource Include="Assets\Klavrio.png" LogicalName="Klavrio.Logo.png" />
     <Resource Include="Assets\Klavrio.ico" />
     <Compile Remove="Tests\**\*.cs" />

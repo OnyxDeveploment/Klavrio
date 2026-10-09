@@ -41,10 +41,13 @@ internal static class CrashLogger
         catch { /* Diagnostics must never crash the application. */ }
     }
 
-    public static void EndSession()
+    public static void EndSession(int exitCode = 0)
     {
         TimeSpan uptime = DateTimeOffset.Now - SessionStartedAt;
-        Success($"Application exited normally | uptime={FormatDuration(uptime)}");
+        if (exitCode == 0)
+            Success($"Application exited normally | uptime={FormatDuration(uptime)}");
+        else
+            Warning($"Application stopped after an error | exitCode={exitCode} | uptime={FormatDuration(uptime)}");
     }
 
     public static void Record(string area, Exception exception, bool fatal = false)
@@ -82,8 +85,12 @@ internal static class CrashLogger
 
     private static void PrepareStorage()
     {
-        if (storagePrepared) return;
         Directory.CreateDirectory(DirectoryPath);
+        if (storagePrepared)
+        {
+            EnsureFormatPreamble();
+            return;
+        }
         if (File.Exists(LogPath) && !UsesCurrentFormat(LogPath))
         {
             string legacyPath = Path.Combine(DirectoryPath,
@@ -220,7 +227,7 @@ internal static class CrashLogger
 
     public static void OpenFolder()
     {
-        Directory.CreateDirectory(DirectoryPath);
+        lock (Gate) PrepareStorage();
         Process.Start(new ProcessStartInfo("explorer.exe", $"\"{DirectoryPath}\"") { UseShellExecute = true });
     }
 }

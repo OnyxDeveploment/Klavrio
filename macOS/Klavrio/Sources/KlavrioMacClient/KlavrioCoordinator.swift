@@ -112,23 +112,6 @@ final class KlavrioCoordinator: ObservableObject {
         save()
     }
 
-    func setGitHubURL(_ value: String) {
-        settings.githubURL = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        save()
-    }
-
-    func setUpdateManifestURL(_ value: String) {
-        settings.updateManifestURL = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        save()
-        refreshSummaries()
-    }
-
-    func setDictionaryManifestURL(_ value: String) {
-        settings.dictionaryManifestURL = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        save()
-        refreshSummaries()
-    }
-
     func setSelectionHotkey(_ hotkey: HotkeyBinding) {
         guard hotkey != settings.toggleHotkey else {
             setStatus(localizer["shortcutConflictToggle"], .warning)
@@ -209,6 +192,11 @@ final class KlavrioCoordinator: ObservableObject {
             setStatus(localizer["invalidProjectURL"], .warning)
             return
         }
+        NSWorkspace.shared.open(url)
+    }
+
+    func openContributionGuide() {
+        guard let url = safeWebURL(KlavrioLinks.contribute) else { return }
         NSWorkspace.shared.open(url)
     }
 

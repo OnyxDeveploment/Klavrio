@@ -4,11 +4,17 @@
 
 **English** · [עברית](README.he.md)
 
+[Official website](https://klavrio.app/) · [GitHub repository](https://github.com/OnyxDeveploment/Klavrio) · [Releases](https://github.com/OnyxDeveploment/Klavrio/releases) · [Report an issue](https://github.com/OnyxDeveploment/Klavrio/issues)
+
 ---
 
 Klavrio is a privacy-focused, offline keyboard-layout correction utility for Windows 10/11, with a native macOS 13+ edition. It can correct recognized words automatically when Space is pressed, or convert text you select in another app with a global shortcut-even if the text was written before Klavrio was opened.
 
 > **Windows:** The main edition uses WPF and Material Design 3. **macOS:** The native SwiftUI edition lives in [`macOS/Klavrio`](macOS/Klavrio); see its [build guide](macOS/Klavrio/README.md). Building the macOS edition requires a Mac with Xcode.
+
+<p align="center">
+  <a href="Images/Home.png"><img src="Images/Home.png" alt="Klavrio Home screen showing automatic correction and selected-text tools" width="900"></a>
+</p>
 
 ## Highlights
 
@@ -18,13 +24,42 @@ Klavrio is a privacy-focused, offline keyboard-layout correction utility for Win
 - Smart mixed-text mode plus explicit English, Hebrew, Arabic, Russian, German, and French target modes
 - Desktop and Start Menu shortcuts created for the current user on first launch; Windows can include the new Start Menu entry under **Recently added** when that system option is enabled
 - Optional startup registration through both the current-user Startup folder and Registry Run list (no administrator access needed)
-- Configurable GitHub/project button
-- Optional startup update checks driven by configurable HTTPS JSON manifests
+- Official read-only project, community-dictionary, and application-update URLs, so installed clients cannot be redirected to an untrusted feed through Settings
+- Optional startup checks against the official GitHub feeds; Windows updates are downloaded and installed only after confirmation and SHA-256 verification
 - User-editable dictionaries stored separately under `%LOCALAPPDATA%\Klavrio\CustomData`
 - Settings saved under `%LOCALAPPDATA%\Klavrio\settings.json`
-- Local processing only-no account, telemetry, or cloud text API; optional update checks download metadata and dictionary data, never typed text
+- Local text processing only-no account, telemetry, or cloud text API; network access is limited to update metadata, approved dictionary packages, and Windows release downloads that you confirm, never typed text
 - Structured lifecycle, success, warning, and error logs with separate fatal crash reports
 - Typed and selected text are never written to diagnostics
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%" align="center"><a href="Images/Home1.png"><img src="Images/Home1.png" alt="Klavrio safe local preview"></a></td>
+    <td width="50%" align="center"><a href="Images/FixText.png"><img src="Images/FixText.png" alt="Klavrio conversion mode and customizable shortcuts"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Safe local preview</strong><br><sub>Test a phrase without changing text in another app.</sub></td>
+    <td align="center"><strong>Fix selected text</strong><br><sub>Choose a conversion mode and customize both global shortcuts.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><a href="Images/Settings.png"><img src="Images/Settings.png" alt="Klavrio appearance, startup, and dictionary settings"></a></td>
+    <td width="50%" align="center"><a href="Images/SettingsLnag.png"><img src="Images/SettingsLnag.png" alt="Klavrio interface language selector"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Settings and dictionaries</strong><br><sub>Control appearance, startup behavior, and local word data.</sub></td>
+    <td align="center"><strong>Six interface languages</strong><br><sub>English, Hebrew, Arabic, Russian, German, and French.</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><a href="Images/settingsBottom.png"><img src="Images/settingsBottom.png" alt="Klavrio read-only update feeds, diagnostics, and privacy settings" width="700"></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><strong>Trusted updates and diagnostics</strong><br><sub>Official read-only feeds, community contributions, logs, and privacy controls.</sub></td>
+  </tr>
+</table>
+
+Click any screenshot to view it at full size.
 
 ## Build
 
@@ -41,6 +76,8 @@ bin\Release\net8.0-windows\Klavrio.exe
 ```
 
 The release remains a small folder rather than a lone file. The `Data` and `ThirdParty` folders, `LICENSE`, and `THIRD_PARTY_NOTICES.txt` are placed beside the self-contained executable. Keep the complete folder together when distributing Klavrio.
+
+If `Klavrio.exe` is copied by itself, its embedded dictionaries and legal notices are restored automatically on first launch. Klavrio creates `Data`, `ThirdParty`, `LICENSE`, and `THIRD_PARTY_NOTICES.txt` beside the executable. When that location is read-only, the dictionaries use `%LOCALAPPDATA%\Klavrio\BundledData` and the notices use `%LOCALAPPDATA%\Klavrio\Legal`.
 
 An ordinary Visual Studio **Build** also uses `bin\Release\net8.0-windows`, but produces a smaller framework-dependent executable plus DLL files. A default `dotnet publish -r win-x64` creates the standard `win-x64\publish` subtree instead. The supplied release script overrides that publish location so the current self-contained executable is always at the direct path above. Exit Klavrio from the notification area before building so Windows is not locking the EXE.
 
@@ -65,7 +102,7 @@ This workflow also fixes text written before Klavrio was opened: launch Klavrio,
 
 Click either shortcut button in the app and press a new key combination to customize it. Function keys F1–F24 may be used alone; other keys require Ctrl, Alt, or Shift. Windows rejects shortcuts already owned by another app, and Klavrio keeps the previous working shortcut in that case.
 
-Use **Restore defaults** under Settings to reset language, theme, startup behavior, automatic correction, selection mode, shortcuts, project URL, and close-to-tray behavior. Klavrio asks for confirmation first.
+Use **Restore defaults** under Settings to reset language, theme, startup behavior, automatic correction, selection mode, shortcuts, and close-to-tray behavior. Klavrio asks for confirmation first.
 
 ### Automatic correction
 
@@ -75,7 +112,7 @@ This feature is off on first launch. Your choice is remembered.
 
 ## Privacy and safety
 
-Klavrio does not transmit or log typed words or selected text. If update checks are configured, it requests only the configured HTTPS manifests and dictionary ZIP. Diagnostics contain timestamps, anonymous session IDs, lifecycle events, operation outcome, app/runtime versions, and exception details.
+Klavrio does not transmit or log typed words or selected text. By default, it can check the official GitHub community-dictionary and application-update manifests when it opens; either check can be disabled in Settings. These requests contain no typed or selected text. Diagnostics contain timestamps, anonymous session IDs, lifecycle events, operation outcome, app/runtime versions, and exception details.
 
 Logs use short local timestamps, aligned severity labels, readable fields, and a clearly separated header for every application session. Exception stack traces are indented below their event instead of being compressed into one line. Logs are stored at:
 
@@ -95,29 +132,38 @@ For manual additions, open **Settings → Custom dictionaries → Open custom da
 
 French, German, Arabic, and Russian include consolidated LibreOffice/Hunspell-derived word lists. Their pinned source revision, attributions, and separate data licenses are recorded in `Data/COMMUNITY_DICTIONARY_LICENSES.txt`; the reproducible import and consolidation tools are `tools/Import-LibreOfficeDictionaries.ps1` and `tools/Merge-BundledDictionaryData.ps1`.
 
-Contributors can add words through GitHub pull requests. The dictionary workflow validates UTF-8, duplicate entries, required language coverage, and TSV structure on every pull request. After you approve and merge a change into `main`, GitHub Actions automatically creates an immutable dictionary ZIP and refreshes a stable manifest. Configure this URL under **Settings → Community word updates**:
+Contributors can add words through GitHub pull requests by following [CONTRIBUTING.md](CONTRIBUTING.md). The dictionary workflow validates UTF-8, duplicate entries, required language coverage, and TSV structure on every pull request. After you approve and merge a change into `main`, GitHub Actions automatically creates an immutable dictionary ZIP, publishes a human-readable `.sha256` checksum, and refreshes a stable manifest. Klavrio's official feed URL is read-only in Settings; the update check itself can be disabled:
 
 ```text
-https://github.com/OWNER/REPOSITORY/releases/download/dictionary-feed/dictionary-manifest.json
+https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json
 ```
 
 Klavrio verifies the manifest, HTTPS package URL, SHA-256 hash, expanded size, safe filenames, and UTF-8 content before atomically installing the package under `%LOCALAPPDATA%\Klavrio\CommunityData`. User files in `CustomData` still load last and override community mappings. A failed check or package never replaces the last working local data.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contributor and maintainer setup, including the required protected-branch review/check configuration.
 
-## Update manifest
+## Application update manifest
 
-The update checker is enabled by default but performs no network request until an HTTPS manifest URL is configured under Settings. It only checks metadata; Klavrio never downloads or installs an application update automatically. When an update is available, Klavrio can open the HTTPS download or release-notes URL in your browser. Expected JSON:
+The update checker uses this official, read-only repository URL:
+
+```text
+https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json
+```
+
+The repository-root [`klavrio-update.json`](klavrio-update.json) is the update manifest. Klavrio reads the file contents through GitHub's API, compares all four version parts, and asks before downloading a newer version. The manifest intentionally contains only the new version and its download URL:
 
 ```json
 {
-  "version": "1.1.0",
-  "downloadUrl": "https://example.com/Klavrio.exe",
-  "releaseNotesUrl": "https://example.com/releases/1.1.0"
+  "version": "1.0.0.1",
+  "url": "https://github.com/OnyxDeveploment/Klavrio/releases/download/v1.0.0.1/Klavrio.exe"
 }
 ```
 
-Responses are limited to 64 KB and requests time out after eight seconds. Download and release-note URLs must also use HTTPS.
+When a newer version is found, Klavrio uses the executable URL supplied by the JSON instead of constructing a release tag or download path. For direct GitHub release assets, it derives the matching GitHub API request from that URL, obtains the asset size and SHA-256 digest, and verifies the download and its embedded file version before installation. It then keeps a rollback copy, replaces the executable, and restarts. Manifest responses are limited to 64 KB, GitHub metadata to 256 KB, and executable downloads to 300 MB. A code-signing certificate is still recommended because SHA-256 integrity checking does not replace publisher identity signing.
+
+No GitHub Action is required for application updates. The release build updates the repository-root `klavrio-update.json` and also keeps a copy under `artifacts/application-update`. Upload `Klavrio.exe` to its matching release first, then commit and push the generated root JSON to `main`. Full release instructions are in [CONTRIBUTING.md](CONTRIBUTING.md#application-release-feed).
+
+Klavrio uses four-part versions: the published version is `1.0.0.0`, followed by `1.0.0.1`, `1.0.0.2`, and so on. Build a release with a matching embedded version by running `Build_Release.bat 1.0.0.1`, then publish it with the matching Git tag `v1.0.0.1`. Running the script without an argument uses the version declared in `Klavrio.csproj`.
 
 ## Project map
 
@@ -137,6 +183,7 @@ Responses are limited to 64 KB and requests time out after eight seconds. Downlo
 - [`CommunityDataManager.cs`](CommunityDataManager.cs) - active/previous local community data packages
 - [`DictionaryUpdateService.cs`](DictionaryUpdateService.cs) - HTTPS, SHA-256, ZIP, size, filename, and UTF-8 validation
 - [`UpdateChecker.cs`](UpdateChecker.cs) - bounded HTTPS update-manifest checks
+- [`UpdateInstaller.cs`](UpdateInstaller.cs) - verified download, atomic executable replacement, rollback, and restart
 - [`SelectionHotkey.cs`](SelectionHotkey.cs) - global hotkey bindings
 - [`CrashLogger.cs`](CrashLogger.cs) - structured rolling diagnostics and crash reports
 - [`WinApi.cs`](WinApi.cs) - scoped Windows interop

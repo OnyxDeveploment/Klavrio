@@ -4,11 +4,17 @@
 
 **עברית** · [English](README.md)
 
+[האתר הרשמי](https://klavrio.app/) · [המאגר ב-GitHub](https://github.com/OnyxDeveploment/Klavrio) · [גרסאות להורדה](https://github.com/OnyxDeveploment/Klavrio/releases) · [דיווח על בעיה](https://github.com/OnyxDeveploment/Klavrio/issues)
+
 ---
 
 Klavrio הוא כלי ממוקד פרטיות שעובד מקומית ומתקן טעויות בפריסת המקלדת. הגרסה הראשית מיועדת ל-Windows 10/11, ויש גם גרסה מקורית ל-macOS 13 ומעלה. אפשר לתקן מילים מזוהות אוטומטית בלחיצה על רווח, או לבחור טקסט בתוכנה אחרת ולהמיר אותו בעזרת קיצור דרך גלובלי - גם אם הטקסט נכתב לפני שפתחתם את Klavrio.
 
 > **Windows:** הגרסה הראשית בנויה עם WPF ו-Material Design 3. **macOS:** גרסת SwiftUI נמצאת בתיקייה [macOS/Klavrio](macOS/Klavrio); הוראות הבנייה נמצאות ב-[מדריך של macOS](macOS/Klavrio/README.md). כדי לבנות את גרסת macOS צריך מחשב Mac עם Xcode.
+
+<p align="center">
+  <a href="Images/Home.png"><img src="Images/Home.png" alt="מסך הבית של Klavrio עם תיקון אוטומטי וכלים לתיקון טקסט מסומן" width="900"></a>
+</p>
 
 ## מה יש בתוכנה
 
@@ -18,13 +24,42 @@ Klavrio הוא כלי ממוקד פרטיות שעובד מקומית ומתקן
 - מצב חכם לטקסט מעורב ומצבים מפורשים להמרה לכל אחת משש השפות
 - קיצורים לשולחן העבודה ולתפריט Start שנוצרים למשתמש הנוכחי בהפעלה הראשונה; Windows יכול להציג את הקיצור החדש תחת **נוספו לאחרונה** כשהאפשרות הזאת מופעלת במערכת
 - הפעלה אוטומטית אופציונלית גם דרך תיקיית Startup וגם דרך רשימת Run ברישום, בלי הרשאת מנהל
-- כפתור GitHub או אתר פרויקט שאפשר להגדיר
-- בדיקות עדכון אופציונליות בזמן ההפעלה, דרך כתובות HTTPS שאפשר להגדיר
+- כתובות רשמיות וקבועות לקריאה בלבד עבור הפרויקט, עדכוני המילים ועדכוני התוכנה, כדי שלא יהיה אפשר להפנות את Klavrio למקור לא אמין דרך ההגדרות
+- בדיקות אופציונליות בזמן ההפעלה מול ה-feeds הרשמיים ב-GitHub; עדכון Windows יורד ומותקן רק לאחר אישור ואימות SHA-256
 - מילונים אישיים בתיקייה נפרדת: **%LOCALAPPDATA%\Klavrio\CustomData**
 - הגדרות מקומיות: **%LOCALAPPDATA%\Klavrio\settings.json**
-- כל תיקון הטקסט נעשה מקומית - בלי חשבון, טלמטריה או שירות תרגום בענן
+- כל תיקון הטקסט נעשה מקומית - בלי חשבון, טלמטריה או שירות תרגום בענן; הרשת משמשת רק למידע על עדכונים, לחבילות מילונים מאושרות ולהורדת גרסת Windows לאחר אישור שלכם, ולעולם לא לטקסט שהקלדתם
 - יומנים ברורים להפעלה, הצלחות, אזהרות ושגיאות, כולל דוח נפרד לקריסה
 - טקסט שהוקלד או סומן אף פעם לא נכתב ליומן האבחון
+
+## תמונות מסך
+
+<table dir="rtl">
+  <tr>
+    <td width="50%" align="center"><a href="Images/Home1.png"><img src="Images/Home1.png" alt="תצוגה מקדימה מקומית ובטוחה ב-Klavrio"></a></td>
+    <td width="50%" align="center"><a href="Images/FixText.png"><img src="Images/FixText.png" alt="מצב ההמרה וקיצורי הדרך של Klavrio"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>בדיקה מקומית ובטוחה</strong><br><sub>בדקו משפט בלי לשנות טקסט בתוכנה אחרת.</sub></td>
+    <td align="center"><strong>תיקון טקסט מסומן</strong><br><sub>בחרו מצב המרה ושנו את שני קיצורי הדרך הגלובליים.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><a href="Images/Settings.png"><img src="Images/Settings.png" alt="הגדרות המראה, ההפעלה והמילונים של Klavrio"></a></td>
+    <td width="50%" align="center"><a href="Images/SettingsLnag.png"><img src="Images/SettingsLnag.png" alt="בחירת שפת הממשק של Klavrio"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>הגדרות ומילונים</strong><br><sub>שליטה במראה, בהפעלה עם Windows ובנתוני המילים המקומיים.</sub></td>
+    <td align="center"><strong>שש שפות ממשק</strong><br><sub>אנגלית, עברית, ערבית, רוסית, גרמנית וצרפתית.</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><a href="Images/settingsBottom.png"><img src="Images/settingsBottom.png" alt="עדכונים לקריאה בלבד, יומנים והגדרות פרטיות ב-Klavrio" width="700"></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><strong>עדכונים אמינים וכלי אבחון</strong><br><sub>כתובות רשמיות לקריאה בלבד, תרומות מהקהילה, יומנים וכלי פרטיות.</sub></td>
+  </tr>
+</table>
+
+אפשר ללחוץ על כל תמונה כדי לפתוח אותה בגודל מלא.
 
 ## בנייה
 
@@ -41,6 +76,8 @@ bin\Release\net8.0-windows\Klavrio.exe
 ```
 
 הגרסה להפצה עדיין כוללת תיקייה קטנה ולא רק קובץ יחיד. התיקיות `Data` ו-`ThirdParty`, הקובץ `LICENSE` והקובץ `THIRD_PARTY_NOTICES.txt` נמצאים ליד קובץ ההפעלה העצמאי. צריך לשמור את כל התיקייה יחד כשמפיצים את Klavrio.
+
+אם מעתיקים רק את `Klavrio.exe`, המילונים והודעות הרישיון המוטמעים משוחזרים אוטומטית בהפעלה הראשונה. Klavrio יוצר ליד קובץ ההפעלה את `Data`, את `ThirdParty`, את `LICENSE` ואת `THIRD_PARTY_NOTICES.txt`. אם המיקום מוגדר לקריאה בלבד, המילונים נשמרים ב-`%LOCALAPPDATA%\Klavrio\BundledData` והודעות הרישיון ב-`%LOCALAPPDATA%\Klavrio\Legal`.
 
 פעולת **Build** רגילה ב-Visual Studio משתמשת גם היא בתיקייה **bin\Release\net8.0-windows**, אבל יוצרת קובץ קטן יותר שתלוי ב-‎.NET ובקובצי DLL נלווים. הפקודה הרגילה **dotnet publish -r win-x64** יוצרת את התיקייה **win-x64\publish**. סקריפט הבנייה של הפרויקט משנה את היעד בכוונה, כדי שקובץ ה-EXE העצמאי והעדכני יהיה תמיד בנתיב הישיר שמופיע למעלה. לפני בנייה, צאו לגמרי מ-Klavrio דרך מגש המערכת כדי ש-Windows לא ינעל את הקובץ.
 
@@ -65,7 +102,7 @@ bin\Release\net8.0-windows\Klavrio.exe
 
 כדי לשנות קיצור דרך, לחצו על כפתור הקיצור המתאים בתוך התוכנה ואז לחצו על הצירוף החדש. אפשר להשתמש במקשים F1–F24 לבד; מקשים אחרים דורשים Ctrl, Alt או Shift. אם קיצור הדרך כבר תפוס בידי תוכנה אחרת, Windows ידחה אותו ו-Klavrio ישמור את הקיצור הקודם שעבד.
 
-הכפתור **שחזור ברירות מחדל** בהגדרות מאפס את שפת הממשק, ערכת הנושא, הפעלה עם המחשב, תיקון אוטומטי, מצב ההמרה, קיצורי הדרך, כתובת הפרויקט והתנהגות הסגירה למגש. לפני האיפוס תופיע בקשת אישור.
+הכפתור **שחזור ברירות מחדל** בהגדרות מאפס את שפת הממשק, ערכת הנושא, הפעלה עם המחשב, תיקון אוטומטי, מצב ההמרה, קיצורי הדרך והתנהגות הסגירה למגש. לפני האיפוס תופיע בקשת אישור.
 
 ### תיקון אוטומטי
 
@@ -75,7 +112,7 @@ bin\Release\net8.0-windows\Klavrio.exe
 
 ## פרטיות ובטיחות
 
-Klavrio לא שולח ולא שומר ביומן מילים שהוקלדו או טקסט שסומן. אם הוגדרו בדיקות עדכון, התוכנה מבקשת רק את קובצי ה-HTTPS שהוגדרו ואת חבילת המילונים. יומן האבחון מכיל זמנים, מזהה הפעלה אקראי, אירועי הפעלה, תוצאות פעולות, גרסאות תוכנה ופרטי חריגות.
+Klavrio לא שולח ולא שומר ביומן מילים שהוקלדו או טקסט שסומן. בדיקות העדכון פונות רק ל-feeds הרשמיים ב-GitHub ולחבילת המילונים, ואפשר לכבות כל בדיקה בהגדרות. הבקשות אינן כוללות טקסט שהוקלד או סומן. יומן האבחון מכיל זמנים, מזהה הפעלה אקראי, אירועי הפעלה, תוצאות פעולות, גרסאות תוכנה ופרטי חריגות.
 
 היומן משתמש בזמנים מקומיים קצרים, רמות חומרה מסודרות ושדות קריאים. כל הפעלה מתחילה בכותרת ברורה, ו-stack trace מופיע בשורות נפרדות. הקובץ נמצא כאן:
 
@@ -95,10 +132,10 @@ Klavrio כולל קובץ מילון אחד, מאוחד וללא כפילויו�
 
 המילונים בצרפתית, גרמנית, ערבית ורוסית מאוחדים עם הרשימות של LibreOffice ו-Hunspell ומנוקים מכפילויות. גרסת המקור, הקרדיטים והרישיונות רשומים ב-[Data/COMMUNITY_DICTIONARY_LICENSES.txt](Data/COMMUNITY_DICTIONARY_LICENSES.txt). כלי הייבוא והאיחוד נמצאים ב-**tools/Import-LibreOfficeDictionaries.ps1** וב-**tools/Merge-BundledDictionaryData.ps1**.
 
-אפשר להוסיף מילים דרך Pull Request ב-GitHub. תהליך ה-GitHub Actions בודק UTF-8, כפילויות, קיום מילונים נדרשים ומבנה TSV בכל בקשה. אחרי שמאשרים וממזגים שינוי אל **main**, התהליך יוצר אוטומטית חבילת מילונים עם גרסה ומעדכן manifest קבוע. את הכתובת הבאה מגדירים תחת **הגדרות ← עדכוני מילים מהקהילה**:
+אפשר להוסיף מילים דרך Pull Request ב-GitHub לפי [CONTRIBUTING.md](CONTRIBUTING.md). תהליך ה-GitHub Actions בודק UTF-8, כפילויות, קיום מילונים נדרשים ומבנה TSV בכל בקשה. אחרי שמאשרים וממזגים שינוי אל **main**, התהליך יוצר אוטומטית חבילת מילונים עם גרסה, מפרסם קובץ `.sha256` קריא ומעדכן manifest קבוע. הכתובת הרשמית הבאה מוצגת לקריאה בלבד בהגדרות; את עצם הבדיקה אפשר לכבות:
 
 ```text
-https://github.com/OWNER/REPOSITORY/releases/download/dictionary-feed/dictionary-manifest.json
+https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json
 ```
 
 Klavrio בודק את כתובת ה-HTTPS, גיבוב SHA-256, גודל החבילה לאחר חילוץ, שמות קבצים ותוכן UTF-8 לפני התקנה אטומית תחת `%LOCALAPPDATA%\Klavrio\CommunityData`. קבצים אישיים ב-`CustomData` עדיין נטענים אחרונים. בדיקה או הורדה שנכשלו אף פעם לא מחליפות את החבילה המקומית האחרונה שעבדה.
@@ -107,17 +144,26 @@ Klavrio בודק את כתובת ה-HTTPS, גיבוב SHA-256, גודל החבי
 
 ## בדיקת עדכוני תוכנה
 
-בדיקת העדכונים מופעלת כברירת מחדל, אבל לא מתבצעת בקשת רשת עד שמגדירים כתובת HTTPS בהגדרות. הבדיקה קוראת מידע על הגרסה בלבד; Klavrio לא מוריד ולא מתקין עדכון לתוכנה באופן אוטומטי. כשיש גרסה חדשה, Klavrio יכול לפתוח בדפדפן את כתובת ההורדה או את דף פרטי הגרסה. מבנה ה-JSON הצפוי:
+בדיקת העדכונים משתמשת בכתובת הרשמית והקבועה הבאה לקריאה בלבד:
+
+```text
+https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json
+```
+
+הקובץ [`klavrio-update.json`](klavrio-update.json) בשורש המאגר הוא ה-manifest של העדכונים. Klavrio קורא את תוכן הקובץ דרך ה-API של GitHub, בודק את כל ארבעת חלקי הגרסה ושואל לפני הורדת גרסה חדשה. הקובץ מכיל בכוונה רק את הגרסה החדשה ואת קישור ההורדה שלה:
 
 ```json
 {
-  "version": "1.1.0",
-  "downloadUrl": "https://example.com/Klavrio.exe",
-  "releaseNotesUrl": "https://example.com/releases/1.1.0"
+  "version": "1.0.0.1",
+  "url": "https://github.com/OnyxDeveploment/Klavrio/releases/download/v1.0.0.1/Klavrio.exe"
 }
 ```
 
-גודל התגובה מוגבל ל-64 KB והבקשה נעצרת אחרי שמונה שניות. גם כתובת ההורדה וכתובת פרטי הגרסה חייבות להשתמש ב-HTTPS.
+כשנמצאת גרסה חדשה, Klavrio משתמש בדיוק בקישור שב-JSON ואינו בונה בעצמו נתיב הורדה או תג גרסה. מקישור ישיר ל-GitHub Release הוא גוזר את בקשת ה-API המתאימה, מקבל את גודל הקובץ ואת SHA-256 ומאמת גם את ההורדה וגם את הגרסה שמוטמעת בקובץ לפני ההתקנה. לאחר מכן הוא שומר עותק לשחזור, מחליף את קובץ ההפעלה ומפעיל את עצמו מחדש. גודל ה-manifest מוגבל ל-64 KB, המידע מ-GitHub מוגבל ל-256 KB והורדת קובץ ההפעלה מוגבלת ל-300 MB. עדיין מומלץ להשתמש בתעודת code-signing, כי בדיקת SHA-256 לא מחליפה חתימת זהות של המפרסם.
+
+לא נדרש GitHub Action לעדכוני התוכנה. בניית הגרסה מעדכנת את `klavrio-update.json` בשורש המאגר ושומרת עותק נוסף תחת `artifacts/application-update`. קודם מעלים את `Klavrio.exe` ל-Release המתאים, ואז עושים commit ו-push לקובץ ה-JSON שנוצר בענף `main`. ההוראות המלאות נמצאות ב-[CONTRIBUTING.md](CONTRIBUTING.md#application-release-feed).
+
+Klavrio משתמש בגרסאות עם ארבעה חלקים: הגרסה שפורסמה היא `1.0.0.0`, ואחריה `1.0.0.1`, ‏`1.0.0.2` וכן הלאה. כדי להטמיע גרסה תואמת בקובץ ההפעלה, הריצו `Build_Release.bat 1.0.0.1` ואז פרסמו אותו עם התג התואם `v1.0.0.1`. הפעלת הסקריפט בלי מספר משתמשת בגרסה שמוגדרת ב-`Klavrio.csproj`.
 
 ## מבנה הפרויקט
 
@@ -137,6 +183,7 @@ Klavrio בודק את כתובת ה-HTTPS, גיבוב SHA-256, גודל החבי
 - [CommunityDataManager.cs](CommunityDataManager.cs) - ניהול חבילת הקהילה הנוכחית והקודמת
 - [DictionaryUpdateService.cs](DictionaryUpdateService.cs) - בדיקת HTTPS, ‏SHA-256, ‏ZIP, גודל, שמות קבצים ו-UTF-8
 - [UpdateChecker.cs](UpdateChecker.cs) - בדיקת manifest מוגבלת ובטוחה
+- [UpdateInstaller.cs](UpdateInstaller.cs) - הורדה מאומתת, החלפה אטומית של קובץ ההפעלה, שחזור והפעלה מחדש
 - [SelectionHotkey.cs](SelectionHotkey.cs) - קיצורי דרך גלובליים
 - [CrashLogger.cs](CrashLogger.cs) - יומן אבחון מתחלף ודוחות קריסה
 - [WinApi.cs](WinApi.cs) - חיבור מוגבל ל-Windows API

@@ -8,6 +8,69 @@ AppDomain.CurrentDomain.ProcessExit += (_, _) =>
     catch { }
 };
 
+CrashLogger.StartSession();
+AssertTrue(Directory.Exists(smokeLogDirectory), "Diagnostic directory creation");
+AssertTrue(File.Exists(CrashLogger.LogPath), "Diagnostic log creation");
+Directory.Delete(smokeLogDirectory, true);
+CrashLogger.Info("Log directory recreation test");
+AssertTrue(Directory.Exists(smokeLogDirectory), "Diagnostic directory recreation");
+AssertTrue(File.Exists(CrashLogger.LogPath), "Diagnostic log recreation");
+
+var defaultSettings = new AppSettings();
+AssertEqual(AppSettings.ProjectUrl, defaultSettings.GitHubUrl, "Default GitHub project URL");
+AssertEqual(AppSettings.DictionaryFeedUrl, defaultSettings.DictionaryManifestUrl, "Default dictionary feed URL");
+AssertEqual("https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json",
+    AppSettings.UpdateFeedUrl, "Official application update feed URL");
+AssertEqual("https://api.github.com/repos/OnyxDeveploment/Klavrio/contents/klavrio-update.json",
+    UpdateChecker.ResolveManifestUrl(AppSettings.UpdateFeedUrl), "GitHub manifest alias resolution");
+AssertEqual(AppSettings.UpdateFeedUrl, defaultSettings.UpdateManifestUrl, "Default application update feed URL");
+var legacySettings = new AppSettings
+{
+    SchemaVersion = 0,
+    GitHubUrl = "https://github.com/",
+    DictionaryManifestUrl = "",
+    UpdateManifestUrl = "https://github.com/legacy/klavrio-update.json"
+};
+AssertTrue(legacySettings.ApplyMigrations(), "Legacy settings migration applied");
+AssertEqual(AppSettings.ProjectUrl, legacySettings.GitHubUrl, "Migrated GitHub project URL");
+AssertEqual(AppSettings.DictionaryFeedUrl, legacySettings.DictionaryManifestUrl, "Migrated dictionary feed URL");
+AssertEqual(AppSettings.UpdateFeedUrl, legacySettings.UpdateManifestUrl, "Migrated application update feed URL");
+AssertTrue(legacySettings.SchemaVersion == 2, "Migrated settings schema version");
+
+const string validUpdateManifest = """
+{
+  "version": "1.0.0.1",
+  "url": "https://github.com/OnyxDeveploment/Klavrio/releases/download/v1.0.0.1/Klavrio.exe"
+}
+""";
+UpdateCheckResult parsedUpdate = UpdateChecker.ParseManifest(validUpdateManifest, new Version(1, 0, 0, 0));
+AssertTrue(parsedUpdate.State == UpdateState.Available, "Application update version detection");
+const string alternateDownloadUrl = "https://github.com/AnotherOwner/AnotherRepository/releases/download/stable/KlavrioSetup.exe";
+UpdateCheckResult alternateUpdate = UpdateChecker.ParseManifest(
+    validUpdateManifest.Replace(
+        "https://github.com/OnyxDeveploment/Klavrio/releases/download/v1.0.0.1/Klavrio.exe",
+        alternateDownloadUrl),
+    new Version(1, 0, 0, 0));
+AssertEqual(alternateDownloadUrl, alternateUpdate.DownloadUrl, "Manifest-owned application download URL");
+const string githubReleaseMetadata = """
+{
+  "html_url": "https://github.com/OnyxDeveploment/Klavrio/releases/tag/v1.0.0.1",
+  "assets": [{
+    "name": "Klavrio.exe",
+    "browser_download_url": "https://github.com/OnyxDeveploment/Klavrio/releases/download/v1.0.0.1/Klavrio.exe",
+    "digest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "size": 78209183
+  }]
+}
+""";
+UpdateCheckResult resolvedUpdate = UpdateChecker.ApplyGitHubAssetMetadata(parsedUpdate, githubReleaseMetadata);
+AssertEqual("0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    resolvedUpdate.Sha256, "GitHub release SHA-256 metadata");
+AssertTrue(resolvedUpdate.DownloadSize == 78209183, "GitHub release size metadata");
+AssertThrows<InvalidDataException>(() => UpdateChecker.ParseManifest(
+    validUpdateManifest.Replace("{", "{\n  \"platform\": \"macos-universal\","), new Version(1, 0, 0, 0)),
+    "Application update platform rejection");
+
 var engine = new CorrectionEngine(Path.Combine(AppContext.BaseDirectory, "Data"));
 
 AssertEqual("שלום", engine.Translate("akuo"), "English-layout to Hebrew mapping");
@@ -18,6 +81,24 @@ AssertEqual("מה קורה hello", SelectionConverter.Convert("ma kore hello", S
 AssertEqual("hello", SelectionConverter.Convert("hello", SelectionDirection.Auto), "Known English preservation");
 AssertEqual("unknownword", SelectionConverter.Convert("unknownword", SelectionDirection.Auto), "Unknown token preservation");
 AssertTrue(typeof(CorrectionEngine).Assembly.GetManifestResourceNames().Contains("Klavrio.Logo.png"), "Embedded logo resource");
+string extractedDataDirectory = Directory.CreateTempSubdirectory("KlavrioEmbeddedData-").FullName;
+try
+{
+    BundledDataManager.ExtractTo(extractedDataDirectory);
+    AssertTrue(BundledDataManager.IsComplete(extractedDataDirectory), "Embedded dictionary extraction");
+    var extractedEngine = new CorrectionEngine(extractedDataDirectory);
+    AssertEqual("שלום", extractedEngine.Suggest("akuo"), "Extracted dictionary loading");
+}
+finally { Directory.Delete(extractedDataDirectory, true); }
+string extractedNoticesDirectory = Directory.CreateTempSubdirectory("KlavrioEmbeddedNotices-").FullName;
+try
+{
+    BundledNoticesManager.ExtractTo(extractedNoticesDirectory);
+    AssertTrue(BundledNoticesManager.IsComplete(extractedNoticesDirectory), "Embedded legal notice extraction");
+    AssertTrue(Directory.GetFiles(Path.Combine(extractedNoticesDirectory, "ThirdParty")).Length == 6,
+        "Embedded ThirdParty file count");
+}
+finally { Directory.Delete(extractedNoticesDirectory, true); }
 AssertEqual("קורא", engine.Suggest("eurt"), "Reviewed TSV mapping priority");
 AssertEqual("מה", engine.Suggest("nv"), "Two-letter exact automatic mapping");
 AssertEqual("אתה", engine.Suggest("t,v"), "Punctuation-bearing automatic mapping");
@@ -65,7 +146,7 @@ try
 }
 finally { Directory.Delete(customDirectory, true); }
 
-Console.WriteLine("Klavrio smoke tests passed (41/41).");
+Console.WriteLine("Klavrio smoke tests passed (62/62).");
 return;
 
 static void AssertEqual(string expected, string? actual, string name)
@@ -82,4 +163,11 @@ static void AssertTrue(bool value, string name)
 static void AssertNull(string? actual, string name)
 {
     if (actual is not null) throw new InvalidOperationException($"{name} failed. Expected null, got '{actual}'.");
+}
+
+static void AssertThrows<TException>(Action action, string name) where TException : Exception
+{
+    try { action(); }
+    catch (TException) { return; }
+    throw new InvalidOperationException($"{name} failed. Expected {typeof(TException).Name}.");
 }

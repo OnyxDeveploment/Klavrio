@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Privacy information for the Klavrio desktop application and website.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#07111f">
+  <title>Privacy — Klavrio</title>
+  <link rel="canonical" href="https://klavrio.app/privacy.html">
+  <link rel="icon" href="assets/klavrio-mark.png" type="image/png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js"></script>
+  <script src="app.js" defer></script>
+  <script src="analytics.js" defer></script>
+</head>
+<body class="document-page">
+  <a class="skip-link" href="#privacy-content">Skip to content</a>
+  <header class="document-header">
+    <a class="brand" href="index.html">
+      <img src="assets/klavrio-mark.png" alt="" width="40" height="40">
+      <span>Klavrio</span>
+    </a>
+    <button class="theme-toggle" type="button" aria-label="Switch color theme" data-theme-toggle>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+    </button>
+  </header>
+
+  <main id="privacy-content" class="document-shell">
+    <div class="document-title">
+      <p class="eyebrow"><span></span> Privacy</p>
+      <h1>Your text belongs to you.</h1>
+      <p>Last updated: 9 October 2026</p>
+    </div>
+
+    <aside class="document-summary">
+      <strong>The short version</strong>
+      <ul>
+        <li>Keyboard correction runs locally on your device.</li>
+        <li>Klavrio does not require an account or send typed and selected text to a cloud text service.</li>
+        <li>Diagnostics record technical events and errors, not the text you type or select.</li>
+        <li>The official GitHub community-dictionary and application-update feeds can be checked on startup by default. You can disable either check in Settings.</li>
+        <li>Website analytics loads only after you consent and only when the site owner configures a valid GA4 measurement ID.</li>
+      </ul>
+    </aside>
+
+    <section>
+      <h2><span>01</span> Desktop text processing</h2>
+      <p>Klavrio uses local keyboard maps, dictionaries, reviewed mappings, and confidence rules to recognize keyboard-layout mistakes. Automatic correction examines the bounded word immediately before Space. Selected-text conversion temporarily copies the selection, converts it locally, inserts the result, and attempts to restore the previous clipboard contents.</p>
+      <p>Klavrio does not use an account, telemetry service, analytics SDK, or cloud translation API for these operations.</p>
+    </section>
+
+    <section>
+      <h2><span>02</span> Diagnostics</h2>
+      <p>Diagnostics can contain timestamps, an anonymous session identifier, application and runtime versions, lifecycle events, operation outcomes, and exception details. Typed words and selected text are not intentionally written to these logs.</p>
+      <p>Windows logs are stored under <code>%LOCALAPPDATA%\Klavrio\Logs</code>. The macOS edition stores its log under <code>~/Library/Logs/Klavrio</code>. These files stay on your device unless you choose to share them.</p>
+    </section>
+
+    <section>
+      <h2><span>03</span> Optional network access</h2>
+      <p>The community-dictionary URL and <code>https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json</code> are fixed, read-only sources in Klavrio. You can disable either startup check in Settings, but installed clients cannot redirect the checks to another source there.</p>
+      <p>The Windows application-update feature reads the version and executable URL from that JSON file. It downloads and installs only after you confirm, derives the matching GitHub release metadata from the supplied URL, verifies the asset size, SHA-256, and embedded file version, keeps a rollback copy, and restarts Klavrio. The community-data feature similarly validates its HTTPS address, SHA-256 value, size, filenames, and UTF-8 content before activation.</p>
+      <p>These requests do not include the text you type or select. As with any HTTPS request, the remote host can normally receive technical connection information such as your IP address and user agent.</p>
+    </section>
+
+    <section>
+      <h2><span>04</span> Local settings and dictionaries</h2>
+      <p>Windows settings are stored in <code>%LOCALAPPDATA%\Klavrio\settings.json</code>. Custom and community dictionaries are stored in neighboring Klavrio data folders. On macOS, equivalent data is stored under <code>~/Library/Application Support/Klavrio</code>.</p>
+      <p>Your custom dictionary files remain separate from bundled data. Publishing or installing a new application build does not intentionally replace them.</p>
+    </section>
+
+    <section>
+      <h2><span>05</span> Password fields and application limits</h2>
+      <p>Windows password-field detection is best-effort and is reliable only for some native controls. Browsers, terminals, remote desktops, games, elevated applications, and custom editors may block global hooks or injected input or may not expose enough information to identify a sensitive field.</p>
+      <p>Keep automatic correction disabled in sensitive contexts. You can toggle it with your configured shortcut or from the application tray.</p>
+    </section>
+
+    <section id="website-analytics">
+      <h2><span>06</span> This website</h2>
+      <p>The website supports optional Google Analytics 4 measurement. The Google script is not requested and no analytics event is sent unless you choose <strong>Allow analytics</strong>. If analytics is not configured, the consent prompt is not shown and no analytics request is made.</p>
+      <p>After consent, measurement can include page views, the referring site's host, UTM campaign values, release and outbound-link clicks, use of the site's Share button, general browser/device information, and approximate geographic reports derived by Google Analytics. It never includes text entered into the layout demo or text processed by the desktop application. Advertising signals and ad personalization are disabled by this implementation.</p>
+      <p>The site stores your theme and analytics choice in local storage. When analytics is allowed, Google Analytics may also set first-party measurement cookies with a configured lifetime of up to 90 days. You can change your choice through <strong>Analytics settings</strong> in the footer. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a> for Google's handling of analytics data.</p>
+      <p>The company that eventually hosts the site may maintain ordinary server or security logs. Review that provider's policy before publishing if you need hosting-specific disclosures.</p>
+    </section>
+
+    <section>
+      <h2><span>07</span> Removing local data</h2>
+      <p>You can uninstall Klavrio and remove its application-data and log directories to delete its locally stored settings, dictionaries, and diagnostics. Remove its desktop, Start Menu, Startup-folder, or login-item entries if your operating system does not remove them automatically.</p>
+      <p>For the website, use <strong>Analytics settings</strong> to withdraw consent, then clear this site's cookies and local storage in your browser if you also want to remove the saved choice and theme.</p>
+    </section>
+
+    <div class="document-notice">
+      <strong>Important</strong>
+      <p>This page describes the current repository implementation. Recheck it whenever networking, diagnostics, accounts, hosting, or third-party services change.</p>
+    </div>
+  </main>
+
+  <footer class="document-footer">
+    <a href="index.html">← Back to Klavrio</a>
+    <a href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Project license</a>
+    <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/THIRD_PARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">Third-party credits</a>
+    <button class="footer-link" type="button" data-analytics-settings hidden>Analytics settings</button>
+    <span>© 2026 OnyxDeveploment</span>
+  </footer>
+</body>
+</html>
+

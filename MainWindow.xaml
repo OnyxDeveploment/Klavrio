@@ -253,10 +253,16 @@
                                     <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [UpdateWordsNow]}" Height="56"
                                             Style="{StaticResource Klavrio.PrimaryButton}" Click="CheckDictionaryUpdatesButton_Click"
                                             ToolTip="Download only a validated ZIP of UTF-8 dictionary data" />
-                                    <TextBox x:Name="DictionaryManifestUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OWNER/REPO/releases/download/dictionary-feed/dictionary-manifest.json"
-                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" LostFocus="DictionaryManifestUrlTextBox_LostFocus" />
+                                    <TextBox x:Name="DictionaryManifestUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" IsReadOnly="True"
+                                             ToolTip="Official read-only feed. Changes are published only after an approved GitHub pull request is merged." />
                                 </DockPanel>
-                                <TextBlock x:Name="DictionaryUpdateStatusText" Style="{StaticResource Klavrio.Caption}" Margin="0,12,0,0" TextWrapping="Wrap" />
+                                <DockPanel Margin="0,12,0,0" LastChildFill="True">
+                                    <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [ContributeWords]}"
+                                            Style="{StaticResource MaterialDesignFlatButton}" Click="ContributeWordsButton_Click"
+                                            ToolTip="Open the contribution guide and submit words through a reviewed GitHub pull request" />
+                                    <TextBlock x:Name="DictionaryUpdateStatusText" Style="{StaticResource Klavrio.Caption}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                </DockPanel>
                             </StackPanel>
                         </materialDesign:Card>
                         <materialDesign:Card Style="{StaticResource Klavrio.Card}">
@@ -268,13 +274,15 @@
                                 <DockPanel LastChildFill="True">
                                     <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [CheckNow]}" Height="56"
                                             Style="{StaticResource Klavrio.PrimaryButton}" Click="CheckForUpdatesButton_Click" />
-                                    <TextBox x:Name="UpdateManifestUrlTextBox" materialDesign:HintAssist.Hint="https://example.com/klavrio-update.json"
-                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" LostFocus="UpdateManifestUrlTextBox_LostFocus" />
+                                    <TextBox x:Name="UpdateManifestUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" IsReadOnly="True"
+                                             ToolTip="Official read-only release feed. Downloads require confirmation and SHA-256 verification." />
                                 </DockPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
                                     <TextBlock x:Name="UpdateStatusText" Style="{StaticResource Klavrio.Caption}" VerticalAlignment="Center" />
-                                    <Button x:Name="OpenUpdateButton" Content="{Binding [OpenUpdate]}" Margin="12,0,0,0" Visibility="Collapsed"
-                                            Style="{StaticResource MaterialDesignFlatButton}" Click="OpenUpdateButton_Click" />
+                                    <Button x:Name="InstallUpdateButton" Content="{Binding [InstallUpdate]}" Margin="12,0,0,0" Visibility="Collapsed"
+                                            Style="{StaticResource MaterialDesignFlatButton}" Click="InstallUpdateButton_Click"
+                                            ToolTip="Download, verify, install, and restart Klavrio" />
                                 </StackPanel>
                             </StackPanel>
                         </materialDesign:Card>
@@ -296,8 +304,9 @@
                                 <DockPanel LastChildFill="True">
                                     <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [OpenGitHub]}" Height="56"
                                             Style="{StaticResource Klavrio.PrimaryButton}" Click="GitHubButton_Click" />
-                                    <TextBox x:Name="GitHubUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/owner/Klavrio"
-                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" LostFocus="GitHubUrlTextBox_LostFocus" />
+                                    <TextBox x:Name="GitHubUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OnyxDeveploment/Klavrio"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" IsReadOnly="True"
+                                             ToolTip="Official Klavrio source repository" />
                                 </DockPanel>
                             </StackPanel>
                         </materialDesign:Card>

@@ -1,0 +1,19 @@
+{
+  "name": "Klavrio — Keyboard Layout Correction",
+  "short_name": "Klavrio",
+  "description": "Fix text typed with the wrong keyboard layout without retyping it.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "assets/klavrio-mark.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

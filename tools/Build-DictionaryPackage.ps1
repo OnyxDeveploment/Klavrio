@@ -109,6 +109,9 @@ $manifest = [ordered]@{
 } | ConvertTo-Json -Depth 5
 $manifestPath = Join-Path $OutputDirectory 'dictionary-manifest.json'
 [IO.File]::WriteAllText($manifestPath, $manifest, [Text.UTF8Encoding]::new($false))
+$checksumPath = "$packagePath.sha256"
+[IO.File]::WriteAllText($checksumPath, "$sha256  $packageName`n", [Text.UTF8Encoding]::new($false))
 Write-Host "Package: $packagePath"
 Write-Host "Manifest: $manifestPath"
+Write-Host "Checksum: $checksumPath"
 Write-Host "SHA-256: $sha256"

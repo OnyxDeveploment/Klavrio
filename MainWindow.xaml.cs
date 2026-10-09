@@ -32,7 +32,7 @@ public partial class MainWindow : Window
     private bool trayHintShown;
     private bool updateCheckInProgress;
     private bool dictionaryUpdateCheckInProgress;
-    private string? availableUpdateUrl;
+    private UpdateCheckResult? availableUpdate;
 
     public MainWindow()
     {
@@ -41,10 +41,11 @@ public partial class MainWindow : Window
         DataContext = localization;
         AppearanceManager.Apply(ParseTheme(settings.Theme));
         InitializeComponent();
+        BundledNoticesManager.Ensure();
         CustomDataManager.EnsureFiles();
         CommunityDataManager.EnsureDirectory();
         engine = new CorrectionEngine(
-            Path.Combine(AppContext.BaseDirectory, "Data"),
+            BundledDataManager.Resolve(),
             CommunityDataManager.DirectoryPath,
             CustomDataManager.DirectoryPath);
         SelectionConverter.Configure(engine);
@@ -603,23 +604,23 @@ public partial class MainWindow : Window
         StartWithWindowsCheckBox.IsChecked = false;
         settings.StartWithWindows = false;
         settings.Theme = AppTheme.Dark.ToString();
-        settings.GitHubUrl = "https://github.com/";
+        settings.GitHubUrl = AppSettings.ProjectUrl;
         settings.CheckUpdatesOnStartup = true;
-        settings.UpdateManifestUrl = "";
+        settings.UpdateManifestUrl = AppSettings.UpdateFeedUrl;
         settings.LastUpdateCheckUtc = null;
         settings.CheckDictionaryUpdatesOnStartup = true;
-        settings.DictionaryManifestUrl = "";
+        settings.DictionaryManifestUrl = AppSettings.DictionaryFeedUrl;
         settings.LastDictionaryUpdateCheckUtc = null;
         AppearanceManager.Apply(AppTheme.Dark);
         ApplyFlowDirection();
         ApplyLocalizedChoices();
         GitHubUrlTextBox.Text = settings.GitHubUrl;
         CheckUpdatesOnStartupCheckBox.IsChecked = true;
-        UpdateManifestUrlTextBox.Text = "";
+        UpdateManifestUrlTextBox.Text = settings.UpdateManifestUrl;
         CheckDictionaryUpdatesOnStartupCheckBox.IsChecked = true;
-        DictionaryManifestUrlTextBox.Text = "";
+        DictionaryManifestUrlTextBox.Text = settings.DictionaryManifestUrl;
         RefreshLocalizedUpdateSummaries(packageRemainsInstalled: true);
-        OpenUpdateButton.Visibility = Visibility.Collapsed;
+        InstallUpdateButton.Visibility = Visibility.Collapsed;
         PreviewOutput.Text = localization["PreviewEmpty"];
         initializing = false;
         settings.Save();
@@ -666,41 +667,27 @@ public partial class MainWindow : Window
         if (!initializing) settings.Save();
     }
 
-    private void DictionaryManifestUrlTextBox_LostFocus(object sender, RoutedEventArgs e) => SaveDictionaryManifestUrl();
-
-    private bool SaveDictionaryManifestUrl()
-    {
-        string value = DictionaryManifestUrlTextBox.Text.Trim();
-        if (value.Length == 0)
-        {
-            settings.DictionaryManifestUrl = "";
-            settings.Save();
-            DictionaryUpdateStatusText.Text = "Add the community dictionary manifest URL after publishing your GitHub repository.";
-            return true;
-        }
-        if (!Uri.TryCreate(value, UriKind.Absolute, out Uri? uri) || uri.Scheme != Uri.UriSchemeHttps)
-        {
-            DictionaryManifestUrlTextBox.Text = settings.DictionaryManifestUrl;
-            SetStatus("The dictionary manifest must use a complete HTTPS URL.", StatusTone.Warning);
-            return false;
-        }
-        settings.DictionaryManifestUrl = uri.AbsoluteUri;
-        settings.Save();
-        return true;
-    }
-
     private async void CheckDictionaryUpdatesButton_Click(object sender, RoutedEventArgs e) =>
         await CheckDictionaryUpdatesAsync(manual: true);
 
+    private void ContributeWordsButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(AppSettings.ContributeUrl) { UseShellExecute = true });
+            CrashLogger.Success("Dictionary contribution guide opened");
+            SetStatus("Opened the reviewed dictionary contribution guide.", StatusTone.Success);
+        }
+        catch (Exception exception)
+        {
+            CrashLogger.Record("Open dictionary contribution guide", exception);
+            SetStatus("The contribution guide could not be opened.", StatusTone.Error);
+        }
+    }
+
     private async Task CheckDictionaryUpdatesAsync(bool manual)
     {
-        if (dictionaryUpdateCheckInProgress || !SaveDictionaryManifestUrl()) return;
-        if (string.IsNullOrWhiteSpace(settings.DictionaryManifestUrl))
-        {
-            DictionaryUpdateStatusText.Text = "Add the dictionary manifest URL first. You can provide it after publishing GitHub.";
-            if (manual) SetStatus("No dictionary update URL is configured yet.", StatusTone.Neutral);
-            return;
-        }
+        if (dictionaryUpdateCheckInProgress) return;
 
         dictionaryUpdateCheckInProgress = true;
         DictionaryUpdateStatusText.Text = "Checking the approved community dictionary feed…";
@@ -752,44 +739,15 @@ public partial class MainWindow : Window
         if (!initializing) settings.Save();
     }
 
-    private void UpdateManifestUrlTextBox_LostFocus(object sender, RoutedEventArgs e) => SaveUpdateManifestUrl();
-
-    private bool SaveUpdateManifestUrl()
-    {
-        string value = UpdateManifestUrlTextBox.Text.Trim();
-        if (value.Length == 0)
-        {
-            settings.UpdateManifestUrl = "";
-            settings.Save();
-            UpdateStatusText.Text = "Add the update manifest URL when it is ready.";
-            return true;
-        }
-        if (!Uri.TryCreate(value, UriKind.Absolute, out Uri? uri) || uri.Scheme != Uri.UriSchemeHttps)
-        {
-            UpdateManifestUrlTextBox.Text = settings.UpdateManifestUrl;
-            SetStatus("The update manifest must use a complete HTTPS URL.", StatusTone.Warning);
-            return false;
-        }
-        settings.UpdateManifestUrl = uri.AbsoluteUri;
-        settings.Save();
-        return true;
-    }
-
     private async void CheckForUpdatesButton_Click(object sender, RoutedEventArgs e) => await CheckForUpdatesAsync(manual: true);
 
     private async Task CheckForUpdatesAsync(bool manual)
     {
-        if (updateCheckInProgress || !SaveUpdateManifestUrl()) return;
-        if (string.IsNullOrWhiteSpace(settings.UpdateManifestUrl))
-        {
-            UpdateStatusText.Text = "Add the manifest URL first. You can provide it later.";
-            if (manual) SetStatus("No update URL is configured yet.", StatusTone.Neutral);
-            return;
-        }
+        if (updateCheckInProgress) return;
 
         updateCheckInProgress = true;
         UpdateStatusText.Text = "Checking for updates…";
-        OpenUpdateButton.Visibility = Visibility.Collapsed;
+        InstallUpdateButton.Visibility = Visibility.Collapsed;
         try
         {
             UpdateCheckResult result = await UpdateChecker.CheckAsync(settings.UpdateManifestUrl);
@@ -797,15 +755,15 @@ public partial class MainWindow : Window
             settings.Save();
             if (result.State == UpdateState.Available)
             {
-                availableUpdateUrl = result.DownloadUrl ?? result.ReleaseNotesUrl;
+                availableUpdate = result;
                 UpdateStatusText.Text = $"Version {result.LatestVersion} is available (installed: {result.CurrentVersion}).";
-                OpenUpdateButton.Visibility = availableUpdateUrl is null ? Visibility.Collapsed : Visibility.Visible;
+                InstallUpdateButton.Visibility = Visibility.Visible;
                 CrashLogger.Success($"Update available | current={result.CurrentVersion} | latest={result.LatestVersion}");
                 SetStatus("A Klavrio update is available.", StatusTone.Success);
             }
             else
             {
-                availableUpdateUrl = null;
+                availableUpdate = null;
                 UpdateStatusText.Text = $"Klavrio is up to date ({result.CurrentVersion}).";
                 CrashLogger.Success($"Update check completed | current={result.CurrentVersion} | latest={result.LatestVersion}");
                 if (manual) SetStatus("Klavrio is up to date.", StatusTone.Success);
@@ -820,31 +778,50 @@ public partial class MainWindow : Window
         finally { updateCheckInProgress = false; }
     }
 
-    private void OpenUpdateButton_Click(object sender, RoutedEventArgs e)
+    private async void InstallUpdateButton_Click(object sender, RoutedEventArgs e)
     {
-        if (availableUpdateUrl is null) return;
-        try { Process.Start(new ProcessStartInfo(availableUpdateUrl) { UseShellExecute = true }); }
-        catch (Exception exception) { CrashLogger.Record("Open update URL", exception); SetStatus("The update page could not be opened.", StatusTone.Error); }
-    }
+        if (availableUpdate is null || updateCheckInProgress) return;
 
-    private void GitHubUrlTextBox_LostFocus(object sender, RoutedEventArgs e)
-    {
-        string value = GitHubUrlTextBox.Text.Trim();
-        if (Uri.TryCreate(value, UriKind.Absolute, out Uri? uri) && uri.Scheme is "https" or "http")
+        var dialog = new ConfirmationDialog(
+            this,
+            localization["UpdateInstallTitle"],
+            string.Format(localization["UpdateInstallQuestion"], availableUpdate.LatestVersion),
+            localization["UpdateInstallDetails"],
+            localization["UpdateInstallConfirm"],
+            localization["Cancel"],
+            localization.IsRightToLeft);
+        if (dialog.ShowDialog() != true) return;
+
+        updateCheckInProgress = true;
+        InstallUpdateButton.IsEnabled = false;
+        try
         {
-            settings.GitHubUrl = value;
-            settings.Save();
+            var progress = new Progress<double>(value =>
+                UpdateStatusText.Text = string.Format(localization["UpdateDownloading"], Math.Clamp((int)(value * 100), 0, 100)));
+            string stagedExecutable = await UpdateInstaller.DownloadAsync(availableUpdate, progress);
+            UpdateStatusText.Text = localization["UpdateRestarting"];
+            CrashLogger.Success($"Starting verified update installer | version={availableUpdate.LatestVersion}");
+            UpdateInstaller.LaunchUpdater(stagedExecutable, availableUpdate);
+            exiting = true;
+            Close();
         }
-        else
+        catch (Exception exception) when (exception is System.Net.Http.HttpRequestException or TaskCanceledException or
+                                           InvalidDataException or IOException or UnauthorizedAccessException or
+                                           System.ComponentModel.Win32Exception or FormatException)
         {
-            GitHubUrlTextBox.Text = settings.GitHubUrl;
-            SetStatus("Enter a complete http:// or https:// project URL.", StatusTone.Warning);
+            CrashLogger.Record("Install application update", exception);
+            UpdateStatusText.Text = localization["UpdateInstallFailed"];
+            SetStatus(localization["UpdateInstallFailed"], StatusTone.Warning);
+        }
+        finally
+        {
+            updateCheckInProgress = false;
+            InstallUpdateButton.IsEnabled = true;
         }
     }
 
     private void GitHubButton_Click(object sender, RoutedEventArgs e)
     {
-        GitHubUrlTextBox_LostFocus(GitHubUrlTextBox, e);
         try
         {
             Process.Start(new ProcessStartInfo(settings.GitHubUrl) { UseShellExecute = true });
@@ -922,7 +899,7 @@ public partial class MainWindow : Window
     private void Window_Closing(object? sender, CancelEventArgs e)
     {
         CancelShortcutCapture();
-        if (!exiting && CloseToTrayCheckBox.IsChecked == true)
+        if (!exiting && tray is not null && CloseToTrayCheckBox.IsChecked == true)
         {
             e.Cancel = true;
             Hide();
@@ -938,10 +915,13 @@ public partial class MainWindow : Window
     {
         UnregisterHotkeys();
         windowSource?.RemoveHook(WndProc);
-        monitor.Dispose();
-        tray.Visible = false;
-        tray.Dispose();
-        settings.Save();
+        monitor?.Dispose();
+        if (tray is not null)
+        {
+            tray.Visible = false;
+            tray.Dispose();
+        }
+        settings?.Save();
         System.Windows.Application.Current.Shutdown();
     }
 

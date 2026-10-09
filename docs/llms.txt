@@ -1,0 +1,17 @@
+# Klavrio
+
+Klavrio is a privacy-focused keyboard-layout correction utility for Windows 10/11 and macOS 13 or later.
+
+It corrects text typed with the wrong physical keyboard layout. Users can enable conservative automatic correction for recognized words or select existing text in another desktop application and convert it with a configurable global shortcut.
+
+Supported interface languages and keyboard layouts: English, Hebrew, Arabic, Russian, German, and French.
+
+Text correction runs locally. Klavrio does not require an account and does not send typed or selected text to a cloud translation service. Optional software and community-dictionary update checks use HTTPS metadata; update requests do not contain the user's text.
+
+Official website: https://klavrio.app/
+Official source repository: https://github.com/OnyxDeveploment/Klavrio
+Releases: https://github.com/OnyxDeveploment/Klavrio/releases
+Documentation: https://github.com/OnyxDeveploment/Klavrio/blob/main/README.md
+Privacy information: https://klavrio.app/privacy.html
+License: https://github.com/OnyxDeveploment/Klavrio/blob/main/LICENSE
+

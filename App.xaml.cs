@@ -11,6 +11,12 @@ public partial class App : System.Windows.Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        if (UpdateInstaller.TryRunUpdateHelper(e.Args, out int updaterExitCode))
+        {
+            Shutdown(updaterExitCode);
+            return;
+        }
+
         bool startedWithWindows = e.Args.Any(argument => string.Equals(argument, "--startup", StringComparison.OrdinalIgnoreCase));
         singleInstance = new Mutex(true, @"Local\Klavrio.Desktop.7F80B9CE", out bool firstInstance);
         if (!firstInstance)
@@ -35,6 +41,10 @@ public partial class App : System.Windows.Application
         {
             CrashLogger.StartSession();
             sessionStarted = true;
+            UpdateInstaller.CleanupStagedUpdates();
+            int updatedFromIndex = Array.FindIndex(e.Args, argument => argument.Equals("--updated-from", StringComparison.OrdinalIgnoreCase));
+            if (updatedFromIndex >= 0 && updatedFromIndex + 1 < e.Args.Length)
+                CrashLogger.Success($"Application update installed | previousRequest={e.Args[updatedFromIndex + 1]}");
             ShortcutManager.EnsureUserLaunchShortcuts();
             WinApi.ValidateInterop();
             MainWindow = new MainWindow();
@@ -49,7 +59,7 @@ public partial class App : System.Windows.Application
 
     protected override void OnExit(ExitEventArgs e)
     {
-        if (sessionStarted) CrashLogger.EndSession();
+        if (sessionStarted) CrashLogger.EndSession(e.ApplicationExitCode);
         singleInstance?.Dispose();
         base.OnExit(e);
     }

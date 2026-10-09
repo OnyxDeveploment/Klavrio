@@ -4,14 +4,102 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Klavrio fixes text typed with the wrong keyboard layout on Windows and macOS—locally, quickly, and without retyping.">
+  <meta name="author" content="onyxdeveploment">
+  <meta name="application-name" content="Klavrio">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#07111f">
-  <meta property="og:title" content="Klavrio — Keyboard layout correction">
-  <meta property="og:description" content="Fix the layout. Keep the thought.">
+  <meta property="og:title" content="Klavrio — Fix the wrong keyboard layout">
+  <meta property="og:description" content="Correct English, Hebrew, Arabic, Russian, German, and French keyboard-layout mistakes locally—without retyping.">
   <meta property="og:type" content="website">
-  <title>Klavrio — Fix the layout. Keep the thought.</title>
+  <meta property="og:url" content="https://klavrio.app/">
+  <meta property="og:site_name" content="Klavrio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://klavrio.app/assets/klavrio-mark.png">
+  <meta property="og:image:width" content="1254">
+  <meta property="og:image:height" content="1254">
+  <meta property="og:image:alt" content="Klavrio keyboard-layout correction logo">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Klavrio — Fix the wrong keyboard layout">
+  <meta name="twitter:description" content="Correct keyboard-layout mistakes locally on Windows and macOS—without retyping.">
+  <meta name="twitter:image" content="https://klavrio.app/assets/klavrio-mark.png">
+  <title>Klavrio — Keyboard layout correction for Windows and macOS</title>
+  <link rel="canonical" href="https://klavrio.app/">
   <link rel="icon" href="assets/klavrio-mark.png" type="image/png">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://klavrio.app/#software",
+    "name": "Klavrio",
+    "alternateName": "Klavrio Keyboard Layout Correction",
+    "description": "A privacy-focused utility that corrects text typed with the wrong keyboard layout without requiring the user to retype it.",
+    "applicationCategory": "UtilitiesApplication",
+    "applicationSubCategory": "Keyboard layout correction",
+    "operatingSystem": "Windows 10, Windows 11, macOS 13 or later",
+    "softwareVersion": "1.0.0.1",
+    "url": "https://klavrio.app/",
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://github.com/OnyxDeveploment/Klavrio/releases/latest"
+    },
+    "downloadUrl": "https://github.com/OnyxDeveploment/Klavrio/releases/latest",
+    "releaseNotes": "https://github.com/OnyxDeveploment/Klavrio/releases",
+    "codeRepository": "https://github.com/OnyxDeveploment/Klavrio",
+    "license": "https://github.com/OnyxDeveploment/Klavrio/blob/main/LICENSE",
+    "image": "https://klavrio.app/assets/klavrio-mark.png",
+    "featureList": [
+      "Automatic keyboard-layout correction",
+      "Selected-text conversion with a global shortcut",
+      "English, Hebrew, Arabic, Russian, German, and French layouts",
+      "Offline text processing",
+      "Custom and community dictionaries"
+    ],
+    "inLanguage": ["en", "he", "ar", "ru", "de", "fr"],
+    "author": {
+      "@type": "Person",
+      "name": "onyxdeveploment",
+      "url": "https://github.com/OnyxDeveploment"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Klavrio send what I type anywhere?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Text correction runs locally. Requests to the official update feeds do not include typed or selected text." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Klavrio fix text written before it was opened?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the existing text in another application and press the configured selected-text shortcut." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Klavrio a spelling or grammar checker?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Klavrio repairs keyboard-layout mistakes and avoids rewriting uncertain text." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I add my own words?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. User dictionaries are stored separately, load after bundled data, and are not replaced by application updates." }
+      }
+    ]
+  }
+  </script>
+  <script src="site-config.js"></script>
   <script src="app.js" defer></script>
+  <script src="analytics.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -32,6 +120,7 @@
       <a href="#playground">Try it</a>
       <a href="#features">Features</a>
       <a href="#download">Get Klavrio</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">GitHub</a>
     </nav>
 
     <button class="theme-toggle" type="button" aria-label="Switch color theme" data-theme-toggle>
@@ -47,7 +136,10 @@
         <p class="hero-lead">Klavrio repairs text typed with the wrong keyboard layout—while you type or long after. No cloud processing. No account. No starting over.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#download">Get Klavrio</a>
+          <a class="button button-quiet" href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
           <a class="button button-quiet" href="#playground">Try the layout lab <span aria-hidden="true">↓</span></a>
+          <button class="button button-quiet" type="button" data-share>Share Klavrio <span aria-hidden="true">↗</span></button>
+          <span class="share-feedback" role="status" aria-live="polite" data-share-feedback></span>
         </div>
         <ul class="hero-facts" aria-label="Key facts">
           <li><strong>6</strong> layouts</li>
@@ -187,7 +279,8 @@
         <article class="feature-panel" data-reveal>
           <span class="feature-kicker">Community data</span>
           <h3>Dictionaries that can grow</h3>
-          <p>Reviewed GitHub updates are verified by HTTPS, SHA-256, size, filename, and UTF-8 checks.</p>
+          <p>Suggest words through a pull request. Only reviewed and merged changes are packaged, versioned, and verified by HTTPS, SHA-256, size, filename, and UTF-8 checks.</p>
+          <a class="feature-link" href="https://github.com/OnyxDeveploment/Klavrio/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute words <span aria-hidden="true">→</span></a>
           <div class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         </article>
 
@@ -205,7 +298,7 @@
         <div class="download-copy">
           <p class="eyebrow"><span></span> Klavrio 1.0</p>
           <h2>Make the keyboard<br>follow your language.</h2>
-          <p>Choose your platform. Release URLs are intentionally kept in one small configuration block in <code>app.js</code>, ready for your GitHub release links.</p>
+          <p>Choose your platform. Both cards open the latest release on the official Klavrio GitHub repository.</p>
         </div>
 
         <div class="platform-list">
@@ -231,7 +324,7 @@
       <div class="faq-list" data-reveal>
         <details>
           <summary>Does Klavrio send what I type anywhere?</summary>
-          <p>No. Text correction is local. Network access is limited to optional app and community-dictionary update URLs that you configure.</p>
+          <p>No. Text correction is local. Network access is limited to the official read-only dictionary and application-update feeds; neither request includes your text, and both checks can be disabled.</p>
         </details>
         <details>
           <summary>Can it fix text written before Klavrio was open?</summary>
@@ -243,7 +336,11 @@
         </details>
         <details>
           <summary>Can I add my own words?</summary>
-          <p>Yes. Custom dictionaries live separately from bundled and community data, load last, and are never replaced by an app build.</p>
+          <p>Yes. Personal dictionaries stay local and load last. To share words with everyone, follow the <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">contribution guide</a> and open a pull request for review.</p>
+        </details>
+        <details>
+          <summary>How are Windows updates installed?</summary>
+          <p>Klavrio reads the version and executable URL from its read-only <code>klavrio-update.json</code>. After you approve an available update, it verifies the GitHub asset's size, SHA-256, and embedded version, keeps a rollback copy, replaces the executable, and restarts.</p>
         </details>
       </div>
     </section>
@@ -256,9 +353,11 @@
     </div>
     <nav aria-label="Footer navigation">
       <a href="privacy.html">Privacy</a>
-      <a href="../LICENSE">License</a>
-      <a href="../THIRD_PARTY_NOTICES.txt">Credits</a>
-      <a href="../CONTRIBUTING.md">Contribute</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/THIRD_PARTY_NOTICES.txt" target="_blank" rel="noopener noreferrer">Credits</a>
+      <a href="https://github.com/OnyxDeveploment/Klavrio/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute</a>
+      <button class="footer-link" type="button" data-analytics-settings hidden>Analytics settings</button>
       <a href="#top">Back to top ↑</a>
     </nav>
     <p>© 2026 OnyxDeveploment. Klavrio is source-available for noncommercial use.</p>

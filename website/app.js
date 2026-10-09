@@ -1,10 +1,9 @@
 (() => {
   "use strict";
 
-  // Replace these values with final HTTPS release URLs when they are available.
   const releaseLinks = Object.freeze({
-    windows: "",
-    macos: ""
+    windows: "https://github.com/OnyxDeveploment/Klavrio/releases/latest",
+    macos: "https://github.com/OnyxDeveploment/Klavrio/releases/latest"
   });
 
   const physicalKeys = "qwertyuiopasdfghjklzxcvbnm,.;/[]'";
@@ -25,6 +24,8 @@
   const output = document.querySelector("[data-layout-output]");
   const selector = document.querySelector("[data-layout-select]");
   const feedback = document.querySelector("[data-feedback]");
+  const shareButton = document.querySelector("[data-share]");
+  const shareFeedback = document.querySelector("[data-share-feedback]");
 
   function preferredTheme() {
     try {
@@ -97,6 +98,41 @@
     }
   }
 
+  function shareUrl() {
+    const url = new URL(location.href);
+    url.hash = "";
+    url.search = "";
+    url.searchParams.set("utm_source", "web_share");
+    url.searchParams.set("utm_medium", "share");
+    url.searchParams.set("utm_campaign", "site_share");
+    return url.href;
+  }
+
+  async function shareSite() {
+    const url = shareUrl();
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Klavrio",
+          text: "Fix text typed with the wrong keyboard layout—without retyping it.",
+          url
+        });
+        if (shareFeedback) shareFeedback.textContent = "Shared";
+        document.dispatchEvent(new CustomEvent("klavrio:share", { detail: { method: "native", content_type: "website" } }));
+      } else {
+        await navigator.clipboard.writeText(url);
+        if (shareFeedback) shareFeedback.textContent = "Tracked share link copied";
+        document.dispatchEvent(new CustomEvent("klavrio:share", { detail: { method: "clipboard", content_type: "website" } }));
+      }
+    } catch (error) {
+      if (error?.name !== "AbortError" && shareFeedback) shareFeedback.textContent = "Could not share this page";
+    }
+
+    window.setTimeout(() => {
+      if (shareFeedback) shareFeedback.textContent = "";
+    }, 2500);
+  }
+
   function configureReleaseCards() {
     document.querySelectorAll("[data-platform]").forEach(card => {
       const platform = card.dataset.platform;
@@ -104,8 +140,9 @@
       if (!configured) return;
 
       card.href = configured;
-      card.querySelector(".platform-action").textContent = "Download →";
-      card.setAttribute("rel", "noopener");
+      card.querySelector(".platform-action").textContent = "View releases →";
+      card.setAttribute("target", "_blank");
+      card.setAttribute("rel", "noopener noreferrer");
     });
   }
 
@@ -152,6 +189,7 @@
   menu?.querySelectorAll("a").forEach(link => link.addEventListener("click", collapseMenu));
   document.querySelector("[data-convert]")?.addEventListener("click", refreshLayoutPreview);
   document.querySelector("[data-copy]")?.addEventListener("click", copyPreview);
+  shareButton?.addEventListener("click", shareSite);
   document.querySelectorAll("[data-sample]").forEach(button => button.addEventListener("click", () => chooseSample(button)));
   selector?.addEventListener("change", refreshLayoutPreview);
   input?.addEventListener("keydown", event => {
