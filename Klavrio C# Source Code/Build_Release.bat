@@ -7,6 +7,10 @@ set "PROJECT_FILE=%~dp0Klavrio.csproj"
 set "OUTPUT_DIR=%~dp0bin\Release\net8.0-windows"
 set "STAGING_DIR=%~dp0artifacts\publish\win-x64-staging"
 set "APP_EXE=%STAGING_DIR%\Klavrio.exe"
+set "REPOSITORY_ROOT=%~dp0.."
+set "UPDATE_TOOL=%REPOSITORY_ROOT%\tools\Build-ApplicationUpdateManifest.ps1"
+set "UPDATE_MANIFEST=%REPOSITORY_ROOT%\klavrio-update.json"
+set "UPDATE_OUTPUT=%REPOSITORY_ROOT%\artifacts\application-update"
 set "RELEASE_VERSION=%~1"
 set "VERSION_ARGS=-p:KlavrioReleaseBuild=true"
 
@@ -45,7 +49,7 @@ if %SDK_MAJOR% LSS 8 (
 if defined RELEASE_VERSION (
     powershell -NoProfile -Command "if ($env:RELEASE_VERSION -notmatch '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') { exit 1 }"
     if errorlevel 1 (
-        echo ERROR: Version must use four numeric parts, for example 1.0.0.1.
+        echo ERROR: Version must use four numeric parts, for example 1.0.0.0.
         goto :failed
     )
     set "VERSION_ARGS=-p:Version=%RELEASE_VERSION% -p:AssemblyVersion=%RELEASE_VERSION% -p:FileVersion=%RELEASE_VERSION% -p:InformationalVersion=%RELEASE_VERSION%"
@@ -160,16 +164,16 @@ if errorlevel 1 (
 
 echo Creating the manual application-update manifest...
 if defined RELEASE_VERSION (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Build-ApplicationUpdateManifest.ps1" -Version "%RELEASE_VERSION%" -ExecutablePath "%OUTPUT_DIR%\Klavrio.exe"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%UPDATE_TOOL%" -Version "%RELEASE_VERSION%" -ExecutablePath "%OUTPUT_DIR%\Klavrio.exe" -ManifestSourcePath "%UPDATE_MANIFEST%" -OutputDirectory "%UPDATE_OUTPUT%"
 ) else (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Build-ApplicationUpdateManifest.ps1" -ExecutablePath "%OUTPUT_DIR%\Klavrio.exe"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%UPDATE_TOOL%" -ExecutablePath "%OUTPUT_DIR%\Klavrio.exe" -ManifestSourcePath "%UPDATE_MANIFEST%" -OutputDirectory "%UPDATE_OUTPUT%"
 )
 if errorlevel 1 (
     echo ERROR: Could not create the application-update manifest.
     goto :failed
 )
 
-copy /Y "%~dp0artifacts\application-update\klavrio-update.json" "%~dp0klavrio-update.json" >nul
+copy /Y "%UPDATE_OUTPUT%\klavrio-update.json" "%UPDATE_MANIFEST%" >nul
 if errorlevel 1 (
     echo ERROR: Could not update the repository-root klavrio-update.json.
     goto :failed
@@ -187,9 +191,9 @@ echo   Software, runtime, framework, and icon license notices
 echo   Klavrio LICENSE
 echo.
 echo Manual update-feed files:
-echo   %~dp0klavrio-update.json
-echo   %~dp0artifacts\application-update\klavrio-update.json
-echo   %~dp0artifacts\application-update\Klavrio.exe.sha256
+echo   %UPDATE_MANIFEST%
+echo   %UPDATE_OUTPUT%\klavrio-update.json
+echo   %UPDATE_OUTPUT%\Klavrio.exe.sha256
 echo.
 
 if not defined CI pause

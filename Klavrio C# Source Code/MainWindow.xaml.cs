@@ -745,6 +745,7 @@ public partial class MainWindow : Window
     {
         if (updateCheckInProgress) return;
 
+        bool offerInstallation = false;
         updateCheckInProgress = true;
         UpdateStatusText.Text = "Checking for updates…";
         InstallUpdateButton.Visibility = Visibility.Collapsed;
@@ -760,6 +761,7 @@ public partial class MainWindow : Window
                 InstallUpdateButton.Visibility = Visibility.Visible;
                 CrashLogger.Success($"Update available | current={result.CurrentVersion} | latest={result.LatestVersion}");
                 SetStatus("A Klavrio update is available.", StatusTone.Success);
+                offerInstallation = true;
             }
             else
             {
@@ -776,9 +778,14 @@ public partial class MainWindow : Window
             if (manual) SetStatus("Could not check for updates. See the diagnostic log.", StatusTone.Warning);
         }
         finally { updateCheckInProgress = false; }
+
+        if (offerInstallation)
+            await OfferAvailableUpdateAsync();
     }
 
-    private async void InstallUpdateButton_Click(object sender, RoutedEventArgs e)
+    private async void InstallUpdateButton_Click(object sender, RoutedEventArgs e) => await OfferAvailableUpdateAsync();
+
+    private async Task OfferAvailableUpdateAsync()
     {
         if (availableUpdate is null || updateCheckInProgress) return;
 
@@ -796,6 +803,8 @@ public partial class MainWindow : Window
         InstallUpdateButton.IsEnabled = false;
         try
         {
+            UpdateStatusText.Text = localization["UpdatePreparing"];
+            availableUpdate = await UpdateChecker.PrepareDownloadAsync(availableUpdate);
             var progress = new Progress<double>(value =>
                 UpdateStatusText.Text = string.Format(localization["UpdateDownloading"], Math.Clamp((int)(value * 100), 0, 100)));
             string stagedExecutable = await UpdateInstaller.DownloadAsync(availableUpdate, progress);

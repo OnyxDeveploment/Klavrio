@@ -147,7 +147,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contributor and maintainer setup, inc
 The update checker uses this official, read-only repository URL:
 
 ```text
-https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json
+https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json
 ```
 
 The repository-root [`klavrio-update.json`](klavrio-update.json) is the update manifest. Klavrio reads the file contents through GitHub's API, compares all four version parts, and asks before downloading a newer version. The manifest intentionally contains only the new version and its download URL:

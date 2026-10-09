@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 $maximumDownloadBytes = 300MB
 
 if ([string]::IsNullOrWhiteSpace($ExecutablePath)) {
-    $ExecutablePath = Join-Path $PSScriptRoot '..\bin\Release\net8.0-windows\Klavrio.exe'
+    $ExecutablePath = Join-Path $PSScriptRoot '..\Klavrio C# Source Code\bin\Release\net8.0-windows\Klavrio.exe'
 }
 if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
     $OutputDirectory = Join-Path $PSScriptRoot '..\artifacts\application-update'

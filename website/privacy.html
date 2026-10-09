@@ -60,7 +60,7 @@
 
     <section>
       <h2><span>03</span> Optional network access</h2>
-      <p>The community-dictionary URL and <code>https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json</code> are fixed, read-only sources in Klavrio. You can disable either startup check in Settings, but installed clients cannot redirect the checks to another source there.</p>
+      <p>The community-dictionary URL and <code>https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json</code> are fixed, read-only sources in Klavrio. You can disable either startup check in Settings, but installed clients cannot redirect the checks to another source there.</p>
       <p>The Windows application-update feature reads the version and executable URL from that JSON file. It downloads and installs only after you confirm, derives the matching GitHub release metadata from the supplied URL, verifies the asset size, SHA-256, and embedded file version, keeps a rollback copy, and restarts Klavrio. The community-data feature similarly validates its HTTPS address, SHA-256 value, size, filenames, and UTF-8 content before activation.</p>
       <p>These requests do not include the text you type or select. As with any HTTPS request, the remote host can normally receive technical connection information such as your IP address and user agent.</p>
     </section>

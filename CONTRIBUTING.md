@@ -69,7 +69,7 @@ The large LibreOffice-derived lists can be regenerated from their pinned upstrea
 Application updates use the tracked [`klavrio-update.json`](klavrio-update.json) file at the repository root. Each release uses a four-part numeric version such as `1.0.0.1`. Installed clients use this stable repository URL, and Klavrio reads its file contents through GitHub's API:
 
 ```text
-https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json
+https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json
 ```
 
 The manifest contains only `version` and `url`. The URL is authoritative: Klavrio does not construct the executable path or assume that its tag matches the version field. The URL must be a direct HTTPS GitHub release executable. When a newer four-part version is found, the Windows client derives the matching release API request from that URL, gets the asset size and SHA-256, asks for confirmation, verifies the download and embedded file version, retains a rollback copy, replaces the running version through the staged new executable, and restarts.

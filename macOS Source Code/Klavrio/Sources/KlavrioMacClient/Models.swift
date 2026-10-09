@@ -76,7 +76,7 @@ enum KlavrioLinks {
     static let project = "https://github.com/OnyxDeveploment/Klavrio"
     static let contribute = project + "/blob/main/CONTRIBUTING.md"
     static let dictionaryFeed = "https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json"
-    static let updateFeed = "https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json"
+    static let updateFeed = "https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json"
 }
 
 struct AppSettings: Codable, Equatable {

@@ -147,7 +147,7 @@ Klavrio בודק את כתובת ה-HTTPS, גיבוב SHA-256, גודל החבי
 בדיקת העדכונים משתמשת בכתובת הרשמית והקבועה הבאה לקריאה בלבד:
 
 ```text
-https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json
+https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json
 ```
 
 הקובץ [`klavrio-update.json`](klavrio-update.json) בשורש המאגר הוא ה-manifest של העדכונים. Klavrio קורא את תוכן הקובץ דרך ה-API של GitHub, בודק את כל ארבעת חלקי הגרסה ושואל לפני הורדת גרסה חדשה. הקובץ מכיל בכוונה רק את הגרסה החדשה ואת קישור ההורדה שלה:

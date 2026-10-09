@@ -19,9 +19,9 @@ AssertTrue(File.Exists(CrashLogger.LogPath), "Diagnostic log recreation");
 var defaultSettings = new AppSettings();
 AssertEqual(AppSettings.ProjectUrl, defaultSettings.GitHubUrl, "Default GitHub project URL");
 AssertEqual(AppSettings.DictionaryFeedUrl, defaultSettings.DictionaryManifestUrl, "Default dictionary feed URL");
-AssertEqual("https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json",
+AssertEqual("https://raw.githubusercontent.com/OnyxDeveploment/Klavrio/refs/heads/main/klavrio-update.json",
     AppSettings.UpdateFeedUrl, "Official application update feed URL");
-AssertEqual("https://api.github.com/repos/OnyxDeveploment/Klavrio/contents/klavrio-update.json",
+AssertEqual("https://raw.githubusercontent.com/OnyxDeveploment/Klavrio/refs/heads/main/klavrio-update.json",
     UpdateChecker.ResolveManifestUrl(AppSettings.UpdateFeedUrl), "GitHub manifest alias resolution");
 AssertEqual(AppSettings.UpdateFeedUrl, defaultSettings.UpdateManifestUrl, "Default application update feed URL");
 var legacySettings = new AppSettings

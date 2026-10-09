@@ -274,7 +274,7 @@
                                 <DockPanel LastChildFill="True">
                                     <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [CheckNow]}" Height="56"
                                             Style="{StaticResource Klavrio.PrimaryButton}" Click="CheckForUpdatesButton_Click" />
-                                    <TextBox x:Name="UpdateManifestUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json"
+                                    <TextBox x:Name="UpdateManifestUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json"
                                              Style="{StaticResource MaterialDesignOutlinedTextBox}" IsReadOnly="True"
                                              ToolTip="Official read-only release feed. Downloads require confirmation and SHA-256 verification." />
                                 </DockPanel>

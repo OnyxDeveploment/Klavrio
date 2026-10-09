@@ -7,7 +7,7 @@ internal sealed class AppSettings
     internal const string ProjectUrl = "https://github.com/OnyxDeveploment/Klavrio";
     internal const string ContributeUrl = ProjectUrl + "/blob/main/CONTRIBUTING.md";
     internal const string DictionaryFeedUrl = "https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json";
-    internal const string UpdateFeedUrl = "https://github.com/OnyxDeveploment/Klavrio/klavrio-update.json";
+    internal const string UpdateFeedUrl = "https://raw.githubusercontent.com/OnyxDeveploment/Klavrio/refs/heads/main/klavrio-update.json";
     private const int CurrentSchemaVersion = 2;
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
     internal static readonly string DirectoryPath = Path.Combine(

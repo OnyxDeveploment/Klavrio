@@ -46,14 +46,24 @@ internal static class UpdateChecker
         if (json.Length > 65_536)
             throw new InvalidDataException("The update manifest is larger than 64 KB.");
 
-        UpdateCheckResult result = ParseManifest(json);
-        if (result.State == UpdateState.Available &&
-            (result.Sha256 is null || result.DownloadSize is <= 0 or > UpdateInstaller.MaximumDownloadBytes))
+        return ParseManifest(json);
+    }
+
+    internal static async Task<UpdateCheckResult> PrepareDownloadAsync(
+        UpdateCheckResult update,
+        CancellationToken cancellationToken = default)
+    {
+        if (update.State != UpdateState.Available || string.IsNullOrWhiteSpace(update.DownloadUrl))
+            throw new InvalidDataException("There is no application update to download.");
+        if (update.Sha256 is not null &&
+            update.DownloadSize is > 0 and <= UpdateInstaller.MaximumDownloadBytes)
         {
-            result = await ResolveGitHubAssetMetadataAsync(result, timeout.Token);
+            return update;
         }
 
-        return result;
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeout.CancelAfter(TimeSpan.FromSeconds(15));
+        return await ResolveGitHubAssetMetadataAsync(update, timeout.Token);
     }
 
     internal static string ResolveManifestUrl(string value)

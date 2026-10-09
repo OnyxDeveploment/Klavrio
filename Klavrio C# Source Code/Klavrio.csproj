@@ -15,10 +15,10 @@
     <Company>OnyxDeveploment</Company>
     <Authors>OnyxDeveploment</Authors>
     <Copyright>Copyright © 2026 OnyxDeveploment</Copyright>
-    <Version>1.0.0.1</Version>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
-    <InformationalVersion>1.0.0.1</InformationalVersion>
+    <Version>1.0.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0.0</InformationalVersion>
     <ApplicationIcon>Assets\Klavrio.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
