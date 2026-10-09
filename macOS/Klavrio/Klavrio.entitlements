@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Klavrio intentionally runs outside App Sandbox because global keyboard event taps
+         and Accessibility replacement are core app features. Hardened Runtime is enabled
+         by the release script when the app is signed. -->
+</dict>
+</plist>

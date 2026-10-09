@@ -1,0 +1,43 @@
+name: macOS build
+
+on:
+  pull_request:
+    paths:
+      - "macOS/**"
+      - "Data/**"
+      - "Assets/Klavrio.png"
+      - ".github/workflows/macos-build.yml"
+  push:
+    branches: [main]
+    paths:
+      - "macOS/**"
+      - "Data/**"
+      - "Assets/Klavrio.png"
+      - ".github/workflows/macos-build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: macos-15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Show toolchain
+        run: swift --version
+      - name: Run macOS core tests
+        run: swift test --package-path macOS/Klavrio
+      - name: Build app and DMG
+        run: zsh macOS/Klavrio/build-release.sh
+      - name: Verify app signature
+        run: codesign --verify --deep --strict --verbose=2 macOS/Klavrio/build/Klavrio.app
+      - name: Upload unsigned test artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: Klavrio-macOS-${{ github.sha }}
+          path: |
+            macOS/Klavrio/build/Klavrio.app
+            macOS/Klavrio/build/Klavrio-1.0.0-macOS-universal.dmg
+          if-no-files-found: error

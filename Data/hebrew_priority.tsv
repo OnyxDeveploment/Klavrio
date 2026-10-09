@@ -1,0 +1,8 @@
+hebrew_word	priority
+# Values below 30 remain available for manual conversion but are not changed automatically.
+במשימה	10
+# Short or common Latin tokens remain manual-selection only.
+בא	20
+דוד	20
+פו	10
+או	20

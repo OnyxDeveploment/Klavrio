@@ -1,0 +1,13 @@
+bin/
+obj/
+artifacts/
+.vs/
+*.user
+*.suo
+*.pdb
+*.dmp
+macOS/Klavrio/.build/
+macOS/Klavrio/.swiftpm/
+macOS/Klavrio/build/
+*.xcuserstate
+xcuserdata/

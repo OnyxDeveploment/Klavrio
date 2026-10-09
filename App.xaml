@@ -1,0 +1,122 @@
+<Application x:Class="Klavrio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             ShutdownMode="OnExplicitShutdown">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Dark"
+                                             PrimaryColor="Indigo"
+                                             SecondaryColor="Cyan" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="Klavrio.WindowBrush" Color="#090E17" />
+            <SolidColorBrush x:Key="Klavrio.SurfaceBrush" Color="#121A28" />
+            <SolidColorBrush x:Key="Klavrio.SurfaceRaisedBrush" Color="#1A2536" />
+            <SolidColorBrush x:Key="Klavrio.SurfaceHoverBrush" Color="#223049" />
+            <SolidColorBrush x:Key="Klavrio.BorderBrush" Color="#2A3850" />
+            <SolidColorBrush x:Key="Klavrio.MutedBrush" Color="#A8B5C9" />
+            <SolidColorBrush x:Key="Klavrio.AccentSoftBrush" Color="#253462" />
+            <SolidColorBrush x:Key="Klavrio.AccentGlowBrush" Color="#334FC4FF" />
+            <SolidColorBrush x:Key="Klavrio.SuccessBrush" Color="#41D392" />
+            <SolidColorBrush x:Key="Klavrio.WarningBrush" Color="#FABE58" />
+            <SolidColorBrush x:Key="Klavrio.ErrorBrush" Color="#F87171" />
+            <SolidColorBrush x:Key="Klavrio.StatusBarBrush" Color="#101827" />
+
+            <LinearGradientBrush x:Key="Klavrio.HeroBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#293A78" Offset="0" />
+                <GradientStop Color="#1A2A54" Offset="0.55" />
+                <GradientStop Color="#163A4A" Offset="1" />
+            </LinearGradientBrush>
+
+            <Style x:Key="Klavrio.Card" TargetType="materialDesign:Card">
+                <Setter Property="Background" Value="{DynamicResource Klavrio.SurfaceBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Foreground}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Klavrio.BorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="24,22" />
+                <Setter Property="Margin" Value="0,0,0,14" />
+                <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp1" />
+                <Setter Property="RenderTransform"><Setter.Value><TranslateTransform /></Setter.Value></Setter>
+                <Style.Triggers>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-2" Duration="0:0:0.18"><DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut" /></DoubleAnimation.EasingFunction></DoubleAnimation></Storyboard></BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="0" Duration="0:0:0.18"><DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut" /></DoubleAnimation.EasingFunction></DoubleAnimation></Storyboard></BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="Klavrio.HeroCard" TargetType="materialDesign:Card" BasedOn="{StaticResource Klavrio.Card}">
+                <Setter Property="Background" Value="{DynamicResource Klavrio.HeroBrush}" />
+                <Setter Property="BorderBrush" Value="#526AA8" />
+                <Setter Property="Padding" Value="26,24" />
+                <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp3" />
+            </Style>
+
+            <Style x:Key="Klavrio.SectionTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Margin" Value="0,0,0,4" />
+            </Style>
+
+            <Style x:Key="Klavrio.PageTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="27" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+
+            <Style x:Key="Klavrio.PageSubtitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13.5" />
+                <Setter Property="Foreground" Value="{DynamicResource Klavrio.MutedBrush}" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="MaxWidth" Value="720" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+
+            <Style x:Key="Klavrio.Overline" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Secondary}" />
+            </Style>
+
+            <Style x:Key="Klavrio.Caption" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource Klavrio.MutedBrush}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
+
+            <Style x:Key="Klavrio.Step" TargetType="Border">
+                <Setter Property="Background" Value="{DynamicResource Klavrio.SurfaceRaisedBrush}" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="12,9" />
+                <Setter Property="Margin" Value="0,0,10,8" />
+            </Style>
+
+            <Style x:Key="Klavrio.IconBadge" TargetType="Border">
+                <Setter Property="Width" Value="42" />
+                <Setter Property="Height" Value="42" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="Background" Value="{DynamicResource Klavrio.AccentSoftBrush}" />
+                <Setter Property="Margin" Value="0,0,12,0" />
+            </Style>
+
+            <Style x:Key="Klavrio.PrimaryButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="MinHeight" Value="46" />
+                <Setter Property="Padding" Value="18,10" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12" />
+            </Style>
+
+            <Style x:Key="Klavrio.SecondaryButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                <Setter Property="MinHeight" Value="44" />
+                <Setter Property="Padding" Value="16,9" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

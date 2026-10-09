@@ -1,0 +1,15 @@
+Klavrio v1.0 selection tests (set Smart Auto, select text, press Ctrl+Shift+Space):
+ma kore -> מה קורה
+aih ata -> איך אתה
+שלום nv bang איך t,v nv עושה היום fkuo uzv -> שלום מה נשמע איך אתה מה עושה היום כלום וזה
+שלום nv eurv איך t,v -> שלום מה קורה איך אתה
+ma kore hello -> מה קורה hello
+מה זה אתה ct kpv הרבה ? -> מה זה אתה בא לפה הרבה ?
+איך קוראים לך אתה bugo btur fuvi kuh btur sus pu פה ct vbv augk sbhtk vnxpr שלי הוא -> איך קוראים לך אתה נועם נאור כוהן לוי נאור דוד פו פה בא הנה שועל דניאל המספר שלי הוא
+קוראים לך tu aeurtho לי -> קוראים לך או שקוראים לי
+
+Expected behavior: Correct Hebrew and recognized English words stay unchanged.
+Unknown Latin words stay unchanged in SMART AUTO; choose "Convert to Hebrew"
+for literal keyboard-position conversion without a dictionary.
+For phonetic Hebrew spelling, only explicit phonetic entries are recognized.
+Note: these cases describe expected Windows behavior, not Windows GUI test results.

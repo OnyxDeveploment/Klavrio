@@ -1,0 +1,257 @@
+Klavrio Noncommercial Share-Alike License 1.0
+
+Copyright (c) 2026 onyxdeveploment
+
+In this License, "onyxdeveploment" identifies the human copyright holder by a
+public pseudonym. It does not identify the associated GitHub account as a
+separate legal entity.
+
+All rights reserved except as expressly licensed below.
+
+1. Grant of Permission
+
+Subject to compliance with this License, and only to the extent the copyright
+holder is legally authorized to grant the applicable rights, the copyright
+holder grants you a worldwide, non-exclusive, royalty-free, non-transferable
+license to use, copy, study, modify, and distribute the Software and Derivative
+Works solely for noncommercial purposes.
+
+Each recipient of a permitted distribution receives the rights granted by this
+License directly from the relevant copyright holder, subject to compliance
+with this License.
+
+2. Source Code and Share-Alike
+
+You may modify the Software and incorporate it into other projects, provided
+that:
+
+a. Any distributed Derivative Work must include its Complete Corresponding
+   Source Code in the preferred form for modification.
+
+b. The portions constituting a Derivative Work of the Software, including
+   modifications and integrated derivative components, must remain licensed
+   under this License.
+
+c. Recipients must receive a copy of this License and the same rights granted
+   under it.
+
+d. The source code must be provided without additional fees or restrictions
+   that prevent recipients from exercising these rights.
+
+e. Distribution of executable-only or closed-source Derivative Works is
+   prohibited.
+
+These requirements apply only to portions that are legally Derivative Works of
+material covered by this License. Independent software that merely operates
+alongside, communicates with, or uses a public interface of the Software, and
+that is not legally a Derivative Work, is not automatically covered by these
+requirements.
+
+3. Commercial Restrictions
+
+Without separate prior written permission from the relevant copyright holder
+or holders, the license granted in Section 1 does not permit you to:
+
+a. Sell, sublicense for payment, rent, or commercially distribute the Software
+   or Derivative Works.
+
+b. Charge subscription, licensing, activation, or access fees for the Software
+   or its functionality.
+
+c. Offer the Software or functionality derived from it as a paid hosted or
+   managed service.
+
+d. Incorporate the Software into a commercial product or service for which
+   payment or other commercial consideration is received.
+
+e. Use the Software or Derivative Works for commercial purposes, including
+   internal commercial business use.
+
+These restrictions are conditions of the permissions granted under this
+License and apply only to covered material and rights that the relevant
+copyright holder is legally authorized to license.
+
+4. Attribution and Notices
+
+All copies and distributed Derivative Works must retain:
+
+a. The applicable copyright notices.
+
+b. This License.
+
+c. A clear acknowledgment of the original Klavrio project.
+
+d. Notices identifying material changes made to the Software.
+
+You may not falsely represent modified versions as official releases endorsed
+by the copyright holder.
+
+5. No Closed-Source Relicensing
+
+You may not relicense the Software, or a Derivative Work covered by this
+License, under terms that permit proprietary distribution, prohibit the
+source-code access required by this License, or remove the noncommercial
+restrictions.
+
+6. Ownership and Authorship
+
+The Software remains the intellectual property of its respective copyright
+holders. No ownership rights are transferred under this License.
+
+Copyright ownership is claimed only in original human-authored contributions
+and in other material for which the relevant copyright holder legally owns
+enforceable rights. The use of automated, assistive, or other development tools
+to help prepare source code or project documentation does not, by itself,
+waive, transfer, or eliminate copyright in qualifying human-authored
+contributions, including human-written, selected, arranged, structured,
+modified, rewritten, debugged, or corrected material.
+
+No claim of exclusive copyright ownership is made under this License over
+material generated without protectable human authorship that is ineligible for
+copyright or other protection under applicable law. Any protectable
+human-authored selection, arrangement, structure, modification, or other
+contribution remains covered only to the extent recognized by applicable law.
+
+You retain ownership of your original contributions, subject to the rights
+required for distribution of Derivative Works under this License.
+
+No trademark rights are granted.
+
+7. Termination and Enforcement
+
+Any exercise of rights outside the scope of this License is unauthorized.
+
+If you violate a condition of this License, your rights under this License
+terminate automatically, subject to applicable law.
+
+If you cease and completely remedy all violations before receiving notice,
+your rights from a particular rights holder are reinstated provisionally as of
+the date of complete remediation, unless and until that rights holder
+expressly and finally terminates those rights. The reinstatement becomes
+permanent if that rights holder does not notify you of the violation by
+reasonable means within 60 days after the complete remediation.
+
+If a relevant rights holder notifies you of a violation by reasonable means,
+and this is the first notice of a violation of this License that you have
+received from that rights holder, your rights from that rights holder are
+reinstated permanently if you completely remedy the violation within 30 days
+after receiving the notice.
+
+Automatic permanent reinstatement does not apply to a violation occurring
+after you previously received notice of a violation of this License from the
+same rights holder, or to a violation committed with actual knowledge that the
+conduct was not permitted by this License. In those circumstances, the
+relevant rights holder may expressly reinstate your rights in writing or may
+expressly and finally terminate them, subject to applicable law.
+
+Enforcement may be pursued only by a person or entity that legally owns or is
+authorized to enforce the rights at issue, and only with respect to covered
+material and enforceable rights within that authority.
+
+The relevant rights holder may pursue injunctive relief, damages, and any
+other remedies legally available for infringement, breach, or other unlawful
+conduct. A violation of this License constitutes copyright infringement only
+to the extent that applicable law treats the conduct as an unauthorized
+exercise of an exclusive copyright right; this License does not declare that
+every violation is automatically copyright infringement.
+
+Reinstatement or termination does not eliminate liability or limit legally
+available remedies for past violations or infringements.
+
+8. Separate Commercial Licensing
+
+Commercial use, commercial distribution, and proprietary licensing may be
+authorized only through a separate written agreement with the relevant
+copyright holder or holders. Such an agreement applies only to material and
+rights that those parties are legally authorized to license.
+
+9. Disclaimer of Warranty
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED
+"AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+THE COPYRIGHT HOLDERS AND CONTRIBUTORS SHALL NOT BE LIABLE FOR DAMAGES ARISING
+FROM THE USE OF THE SOFTWARE, EXCEPT TO THE EXTENT LIABILITY CANNOT LEGALLY BE
+EXCLUDED.
+
+10. Definitions
+
+"Software" means the Klavrio source code, Markdown (.md) and other project
+documentation, original project assets, and accompanying materials that the
+relevant copyright holder expressly distributes under this License and has
+legal authority to license.
+
+"Derivative Work" means a modification, adaptation, or other work based upon
+the Software that constitutes a derivative work under applicable copyright
+law.
+Similarity in purpose, features, behavior, or independently developed
+functionality, without copying protected expression from the Software, does
+not by itself create a Derivative Work.
+
+"Complete Corresponding Source Code" means all human-readable source code in
+its preferred editable form that is reasonably necessary to understand,
+modify, and reproduce the distributed executable form of the covered Software
+or Derivative Work. It includes:
+
+a. build scripts and configuration files reasonably necessary to reproduce
+   the distributed executable;
+
+b. covered project documentation reasonably necessary to understand, modify,
+   and build the distributed Derivative Work; and
+
+c. modifications and covered components incorporated into the distributed
+   Derivative Work.
+
+Complete Corresponding Source Code does not include passwords, API keys,
+credentials, authentication tokens, personal or confidential information,
+private AI prompts or conversations, internal development history,
+tool-interaction logs, or independently licensed system libraries and tools.
+These exclusions do not permit withholding any source file, build script,
+configuration file, documentation, modification, or covered component that is
+otherwise required by this definition. A required file containing an excluded
+sensitive value must be provided with that value removed and replaced by a
+documented, non-secret configuration placeholder sufficient to configure and
+reproduce the build.
+
+"Noncommercial" means use that is not intended for, directed toward, or
+connected with commercial advantage, monetary compensation, business
+activity, revenue generation, or any direct or indirect commercial benefit.
+It excludes, without limitation:
+
+a. selling, renting, or licensing the Software or a Derivative Work for
+   payment;
+
+b. paid hosting or managed services based on the Software or its
+   functionality;
+
+c. integration into a paid product or service;
+
+d. internal use in a for-profit business; and
+
+e. revenue-generating or commercially advantageous use, including use that
+   provides an indirect commercial benefit.
+
+Free personal, educational, research, and community uses are generally
+permitted only when they are genuinely noncommercial under this definition.
+An organization's nonprofit status does not, by itself, make a particular use
+noncommercial.
+
+11. Scope
+
+This License applies only to material for which the person applying it has
+legal authority to grant the stated rights. Its obligations, restrictions,
+termination provisions, and enforcement terms extend only to covered material
+and rights that a relevant copyright holder is legally authorized to license
+or enforce.
+
+Third-party dependencies, documentation, dictionaries, data, and separately
+licensed components remain subject to their respective copyright notices,
+attribution requirements, and license terms. Nothing in this License relicenses
+those materials, removes their license obligations, or limits rights granted
+directly by their licensors.
+
+Nothing in this License claims exclusive rights over material that is
+uncopyrightable, in the public domain, or otherwise outside the enforceable
+rights of the relevant copyright holder.
+
+END OF LICENSE

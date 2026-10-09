@@ -1,0 +1,172 @@
+Klavrio third-party software notices
+====================================
+
+Klavrio includes or is built with the components listed below. These
+components remain under their own licenses. The Klavrio project license does
+not replace or restrict the rights granted by those licenses.
+
+Dictionary and word-list notices are maintained separately because those
+files are independently licensed data assets:
+
+  Data/THIRD_PARTY_LICENSE.txt
+  Data/COMMUNITY_DICTIONARY_LICENSES.txt
+
+Runtime and framework notices
+-----------------------------
+
+.NET Runtime 8.0.31
+Copyright (c) .NET Foundation and Contributors
+License: MIT
+Project: https://github.com/dotnet/runtime
+Verbatim license and bundled third-party notices:
+
+  ThirdParty/DOTNET_RUNTIME_LICENSE.txt
+  ThirdParty/DOTNET_RUNTIME_THIRD_PARTY_NOTICES.txt
+
+Windows Presentation Foundation (WPF) 8.0.31
+Copyright (c) .NET Foundation and Contributors
+License: MIT
+Project: https://github.com/dotnet/wpf
+Verbatim license and bundled third-party notices:
+
+  ThirdParty/WPF_LICENSE.txt
+  ThirdParty/WPF_THIRD_PARTY_NOTICES.txt
+
+Material Design In XAML Toolkit
+-------------------------------
+
+Packages: MaterialDesignThemes 5.3.2 and MaterialDesignColors 5.3.2
+Project: https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit
+
+The MIT License (MIT)
+
+Copyright (c) James Willock, Mulholland Software and Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Material Design Icons / Pictogrammers
+-------------------------------------
+
+The icon pack exposed by Material Design In XAML Toolkit is sourced from the
+Pictogrammers Material Design icon collection. Icons and fonts are distributed
+under the Apache License 2.0 unless an individual upstream icon states another
+compatible license; non-icon code is MIT licensed.
+
+Project: https://github.com/Templarian/MaterialDesign
+Verbatim upstream notice and Apache License 2.0 text:
+
+  ThirdParty/PICTOGRAMMERS_LICENSE.txt
+  ThirdParty/APACHE-2.0.txt
+
+Fody
+----
+
+Package: Fody 6.9.3
+Project: https://github.com/Fody/Fody
+
+MIT License
+
+Copyright (c) The Fody Team and contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+Costura.Fody
+------------
+
+Package: Costura.Fody 6.2.0
+Project: https://github.com/Fody/Costura
+
+The MIT License
+
+Copyright (c) 2012 Simon Cropp and contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+Microsoft.Xaml.Behaviors.Wpf
+----------------------------
+
+Package: Microsoft.Xaml.Behaviors.Wpf 1.1.77 (transitive dependency)
+Project: https://github.com/microsoft/XamlBehaviorsWpf
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Microsoft
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Development tooling acknowledgements
+------------------------------------
+
+Klavrio is developed and tested with technologies and services that include
+the .NET SDK, C#, WPF, MSBuild, PowerShell, Swift, SwiftUI, Xcode, GitHub, and
+GitHub Actions. These tools and services are owned and licensed by their
+respective rights holders. They are not relicensed by Klavrio, and this
+acknowledgement does not imply endorsement of Klavrio by those rights holders.
+
+The macOS Swift package declares no third-party Swift package dependencies.
+The Klavrio website uses no JavaScript framework, external font, analytics
+library, or other runtime package.

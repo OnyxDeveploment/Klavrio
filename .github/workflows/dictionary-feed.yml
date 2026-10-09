@@ -1,0 +1,67 @@
+name: Dictionary validation and feed
+
+on:
+  pull_request:
+    paths:
+      - "Data/**"
+      - "tools/Build-DictionaryPackage.ps1"
+      - "tools/Merge-BundledDictionaryData.ps1"
+      - "tools/Import-LibreOfficeDictionaries.ps1"
+      - ".github/workflows/dictionary-feed.yml"
+  push:
+    branches: [main]
+    paths:
+      - "Data/**"
+      - "tools/Build-DictionaryPackage.ps1"
+      - "tools/Merge-BundledDictionaryData.ps1"
+      - "tools/Import-LibreOfficeDictionaries.ps1"
+      - ".github/workflows/dictionary-feed.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the reviewed commit
+        uses: actions/checkout@v7
+      - name: Validate UTF-8, duplicates, and TSV structure
+        shell: pwsh
+        run: ./tools/Build-DictionaryPackage.ps1 -ValidateOnly
+
+  publish:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out the approved commit
+        uses: actions/checkout@v7
+      - name: Build immutable package and signed-by-hash manifest
+        id: package
+        shell: pwsh
+        run: |
+          $version = (Get-Date).ToUniversalTime().ToString('yyyy.MM.dd') + ".${{ github.run_number }}.${{ github.run_attempt }}"
+          $tag = "dictionaries-$version"
+          $packageName = "klavrio-dictionaries-$version.zip"
+          $packageUrl = "https://github.com/${{ github.repository }}/releases/download/$tag/$packageName"
+          ./tools/Build-DictionaryPackage.ps1 -DataVersion $version -PackageUrl $packageUrl
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+          "package=artifacts/dictionary-feed/$packageName" >> $env:GITHUB_OUTPUT
+      - name: Publish approved dictionary package
+        shell: pwsh
+        run: |
+          gh release create "${{ steps.package.outputs.tag }}" "${{ steps.package.outputs.package }}" `
+            --title "Klavrio dictionaries ${{ steps.package.outputs.version }}" `
+            --notes "Validated community dictionary data from approved commit ${{ github.sha }}."
+          gh release view dictionary-feed *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create dictionary-feed --title "Klavrio dictionary feed" --notes "Stable manifest endpoint used by Klavrio clients."
+          }
+          gh release upload dictionary-feed artifacts/dictionary-feed/dictionary-manifest.json --clobber

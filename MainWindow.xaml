@@ -1,0 +1,317 @@
+<Window x:Class="Klavrio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Klavrio" Icon="Assets/Klavrio.ico"
+        Width="1040" Height="800" MinWidth="620" MinHeight="560"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource Klavrio.WindowBrush}"
+        Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        FontFamily="Segoe UI Variable Text, Segoe UI"
+        Style="{StaticResource MaterialDesignWindow}"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        SourceInitialized="Window_SourceInitialized" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed"
+        PreviewKeyDown="Window_PreviewKeyDown" SizeChanged="Window_SizeChanged">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.28" />
+                    <DoubleAnimation Storyboard.TargetName="RootTransform" Storyboard.TargetProperty="Y" From="12" To="0" Duration="0:0:0.28">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut" /></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid x:Name="Root" Opacity="0">
+        <Grid.RenderTransform><TranslateTransform x:Name="RootTransform" /></Grid.RenderTransform>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="64" />
+        </Grid.RowDefinitions>
+
+        <Border Margin="20,16,20,12" Padding="16,11" CornerRadius="22"
+                Background="{DynamicResource Klavrio.SurfaceBrush}" BorderBrush="{DynamicResource Klavrio.BorderBrush}" BorderThickness="1"
+                materialDesign:ElevationAssist.Elevation="Dp1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Width="48" Height="48" CornerRadius="16" Background="{DynamicResource Klavrio.AccentSoftBrush}" Margin="0,0,13,0">
+                    <Image x:Name="BrandImage" Width="36" Height="36" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Klavrio" FontSize="24" FontWeight="SemiBold" FlowDirection="LeftToRight" />
+                    <TextBlock x:Name="BrandTagline" Text="{Binding [Tagline]}" Foreground="{DynamicResource Klavrio.MutedBrush}" FontSize="12.5" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+                <Button x:Name="HeaderGitHubButton" Grid.Column="2" Margin="8,0" Style="{StaticResource Klavrio.SecondaryButton}"
+                        Click="GitHubButton_Click" ToolTip="Open the configured Klavrio repository">
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                        <materialDesign:PackIcon x:Name="HeaderGithubIcon" Kind="Github" Width="19" Height="19" Margin="0,0,7,0" />
+                        <TextBlock x:Name="GitHubButtonLabel" Text="{Binding [GitHub]}" />
+                    </StackPanel>
+                </Button>
+                <Border x:Name="StatePill" Grid.Column="3" Padding="13,8" CornerRadius="16" BorderBrush="{DynamicResource Klavrio.BorderBrush}" BorderThickness="1"
+                        Background="{DynamicResource Klavrio.SurfaceRaisedBrush}" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="StateDot" Width="8" Height="8" Margin="0,0,8,0" Fill="{DynamicResource Klavrio.MutedBrush}" />
+                        <TextBlock x:Name="StateText" FontSize="11" FontWeight="SemiBold" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="NavigationTabs" Grid.Row="1" Margin="20,0,20,0" Background="Transparent"
+                    TabStripPlacement="Left" Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                    materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+                    materialDesign:NavigationRailAssist.CornerRadius="20"
+                    materialDesign:NavigationRailAssist.FloatingContent="True">
+            <TabItem ToolTip="Home and automatic correction">
+                <TabItem.Header>
+                    <StackPanel><materialDesign:PackIcon Kind="HomeOutline" Width="23" Height="23" HorizontalAlignment="Center" /><TextBlock x:Name="HomeTabLabel" Text="{Binding [Home]}" FontSize="11" HorizontalAlignment="Center" Margin="0,5,0,0" /></StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="4,18,4,20">
+                        <StackPanel Margin="4,0,4,20">
+                            <TextBlock Text="{Binding [Home]}" Style="{StaticResource Klavrio.PageTitle}" />
+                            <TextBlock Text="{Binding [DashboardIntro]}" Style="{StaticResource Klavrio.PageSubtitle}" />
+                        </StackPanel>
+                        <materialDesign:Card Style="{StaticResource Klavrio.HeroCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                <StackPanel Margin="0,0,24,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Style="{StaticResource Klavrio.IconBadge}" Background="#34517E">
+                                            <materialDesign:PackIcon Kind="AutoFix" Width="23" Height="23" Foreground="#D9F7FF" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Text="{Binding [Automatic]}" Style="{StaticResource Klavrio.SectionTitle}" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding [AutomaticHelp]}" Style="{StaticResource Klavrio.Caption}" Foreground="#D7E1F2" Margin="54,0,0,0" />
+                                    <Button x:Name="HomeToggleShortcutButton" HorizontalAlignment="Left" Margin="54,14,0,0"
+                                            Style="{StaticResource Klavrio.SecondaryButton}" Foreground="#FFFFFF" BorderBrush="#8196D1"
+                                            Click="ToggleShortcutButton_Click" ToolTip="Click to change the shortcut that turns automatic correction on or off">
+                                        <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                            <materialDesign:PackIcon Kind="KeyboardOutline" Margin="0,0,8,0" />
+                                            <TextBlock x:Name="HomeToggleShortcutText" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <ToggleButton x:Name="AutomaticToggle" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                  Checked="AutomaticToggle_Changed" Unchecked="AutomaticToggle_Changed"
+                                                  ToolTip="Enable or disable conservative dictionary-backed correction" />
+                                    <TextBlock x:Name="AutomaticCaption" Margin="0,5,0,0" HorizontalAlignment="Center" FontSize="11" FontWeight="Bold" />
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource Klavrio.IconBadge}">
+                                        <materialDesign:PackIcon Kind="TextBoxCheckOutline" Width="22" Height="22" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <TextBlock Text="{Binding [Existing]}" Style="{StaticResource Klavrio.SectionTitle}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Text="{Binding [ExistingHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="54,0,0,16" />
+                                <WrapPanel Margin="0,0,0,16">
+                                    <Border Style="{StaticResource Klavrio.Step}"><TextBlock Text="{Binding [Step1]}" /></Border>
+                                    <Border Style="{StaticResource Klavrio.Step}"><TextBlock Text="{Binding [Step2]}" /></Border>
+                                    <Border Style="{StaticResource Klavrio.Step}"><TextBlock Text="{Binding [Step3]}" /></Border>
+                                </WrapPanel>
+                                <Button x:Name="HomeSelectionShortcutButton" HorizontalAlignment="Left"
+                                        Style="{StaticResource Klavrio.PrimaryButton}" Click="SelectionShortcutButton_Click"
+                                        ToolTip="Click to change this global shortcut">
+                                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight"><materialDesign:PackIcon Kind="KeyboardOutline" Margin="0,0,8,0" /><TextBlock x:Name="HomeSelectionShortcutText" /></StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource Klavrio.IconBadge}">
+                                        <materialDesign:PackIcon Kind="FlaskOutline" Width="22" Height="22" Foreground="{DynamicResource MaterialDesign.Brush.Primary}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <TextBlock Text="{Binding [Try]}" Style="{StaticResource Klavrio.SectionTitle}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Text="{Binding [TryHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="54,0,0,14" />
+                                <Grid x:Name="PreviewComposer">
+                                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="0" /></Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                    <TextBox x:Name="PreviewInput" Grid.Column="0" materialDesign:HintAssist.Hint="{Binding [InputHint]}"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" KeyDown="PreviewInput_KeyDown" />
+                                    <Button x:Name="PreviewActionButton" Grid.Column="1" Margin="12,0,0,0" MinWidth="120" Content="{Binding [Preview]}"
+                                            Style="{StaticResource Klavrio.PrimaryButton}" Click="PreviewButton_Click" ToolTip="Run the correction engine without replacing external text" />
+                                </Grid>
+                                <Border Margin="0,12,0,0" Padding="14,11" CornerRadius="12" Background="{DynamicResource Klavrio.SurfaceRaisedBrush}" BorderBrush="{DynamicResource Klavrio.BorderBrush}" BorderThickness="1">
+                                    <TextBlock x:Name="PreviewOutput" Foreground="{DynamicResource Klavrio.MutedBrush}" FontSize="15" TextWrapping="Wrap" />
+                                </Border>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem ToolTip="Fix selected text and configure shortcuts">
+                <TabItem.Header>
+                    <StackPanel><materialDesign:PackIcon Kind="Translate" Width="23" Height="23" HorizontalAlignment="Center" /><TextBlock x:Name="ConvertTabLabel" Text="{Binding [Convert]}" FontSize="11" HorizontalAlignment="Center" Margin="0,5,0,0" /></StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="4,18,4,20">
+                        <StackPanel Margin="4,0,4,20">
+                            <TextBlock Text="{Binding [Convert]}" Style="{StaticResource Klavrio.PageTitle}" />
+                            <TextBlock Text="{Binding [ConvertIntro]}" Style="{StaticResource Klavrio.PageSubtitle}" />
+                        </StackPanel>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [Mode]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [ModeHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,16" />
+                                <ComboBox x:Name="ConversionMode" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                          materialDesign:HintAssist.Hint="{Binding [Mode]}" Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          SelectionChanged="ConversionMode_SelectionChanged" ToolTip="Choose automatic detection or a specific target keyboard layout" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [SelectionShortcut]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [ShortcutHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,14" />
+                                <Button x:Name="SelectionShortcutButton" Style="{StaticResource Klavrio.SecondaryButton}"
+                                        Click="SelectionShortcutButton_Click" ToolTip="Shortcut used after selecting existing text">
+                                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight"><materialDesign:PackIcon Kind="KeyboardOutline" Margin="0,0,8,0" /><TextBlock x:Name="SelectionShortcutText" /></StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [ToggleShortcut]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [ShortcutHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,14" />
+                                <Button x:Name="ToggleShortcutButton" Style="{StaticResource Klavrio.SecondaryButton}"
+                                        Click="ToggleShortcutButton_Click" ToolTip="Shortcut that turns automatic correction on or off">
+                                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight"><materialDesign:PackIcon Kind="ToggleSwitchOutline" Margin="0,0,8,0" /><TextBlock x:Name="ToggleShortcutText" /></StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem ToolTip="Appearance, dictionaries, updates, and diagnostics">
+                <TabItem.Header>
+                    <StackPanel><materialDesign:PackIcon Kind="CogOutline" Width="23" Height="23" HorizontalAlignment="Center" /><TextBlock x:Name="SettingsTabLabel" Text="{Binding [Settings]}" FontSize="11" HorizontalAlignment="Center" Margin="0,5,0,0" /></StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="4,18,4,20">
+                        <StackPanel Margin="4,0,4,20">
+                            <TextBlock Text="{Binding [Settings]}" Style="{StaticResource Klavrio.PageTitle}" />
+                            <TextBlock Text="{Binding [SettingsIntro]}" Style="{StaticResource Klavrio.PageSubtitle}" />
+                        </StackPanel>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [Appearance]}" Style="{StaticResource Klavrio.SectionTitle}" Margin="0,0,0,14" />
+                                <WrapPanel>
+                                    <ComboBox x:Name="UiLanguageCombo" Width="260" Margin="0,0,14,14" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                              materialDesign:HintAssist.Hint="{Binding [UiLanguage]}" Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                              SelectionChanged="UiLanguageCombo_SelectionChanged" ToolTip="Change the Klavrio interface language" />
+                                    <ComboBox x:Name="ThemeCombo" Width="220" Margin="0,0,0,14" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                              materialDesign:HintAssist.Hint="{Binding [Theme]}" Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                              SelectionChanged="ThemeCombo_SelectionChanged" ToolTip="Switch between dark and light appearance" />
+                                </WrapPanel>
+                                <CheckBox x:Name="StartWithWindowsCheckBox" Content="{Binding [Startup]}" Margin="0,5,0,12"
+                                          Checked="StartWithWindowsCheckBox_Changed" Unchecked="StartWithWindowsCheckBox_Changed"
+                                          ToolTip="Adds Klavrio to both the current-user Startup folder and Registry Run list; administrator access is not required" />
+                                <CheckBox x:Name="CloseToTrayCheckBox" Content="{Binding [Tray]}"
+                                          Checked="CloseToTrayCheckBox_Changed" Unchecked="CloseToTrayCheckBox_Changed"
+                                          ToolTip="Closing the window hides it while global shortcuts keep working" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [CustomData]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [CustomDataHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,14" />
+                                <WrapPanel>
+                                    <Button Content="{Binding [OpenCustomData]}" Margin="0,0,10,8"
+                                            Style="{StaticResource Klavrio.SecondaryButton}" Click="OpenCustomDataButton_Click"
+                                            ToolTip="Open safe user-editable word lists and TSV mapping templates" />
+                                    <Button Content="{Binding [ReloadData]}" Margin="0,0,0,8"
+                                            Style="{StaticResource Klavrio.SecondaryButton}" Click="ReloadDataButton_Click"
+                                            ToolTip="Reload custom and bundled dictionaries without restarting Klavrio" />
+                                </WrapPanel>
+                                <Separator Margin="0,14,0,16" />
+                                <TextBlock Text="{Binding [CommunityUpdates]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [CommunityUpdatesHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,12" TextWrapping="Wrap" />
+                                <CheckBox x:Name="CheckDictionaryUpdatesOnStartupCheckBox" Content="{Binding [CheckDictionaryOnStartup]}" Margin="0,0,0,12"
+                                          Checked="CheckDictionaryUpdatesOnStartupCheckBox_Changed" Unchecked="CheckDictionaryUpdatesOnStartupCheckBox_Changed" />
+                                <DockPanel LastChildFill="True">
+                                    <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [UpdateWordsNow]}" Height="56"
+                                            Style="{StaticResource Klavrio.PrimaryButton}" Click="CheckDictionaryUpdatesButton_Click"
+                                            ToolTip="Download only a validated ZIP of UTF-8 dictionary data" />
+                                    <TextBox x:Name="DictionaryManifestUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/OWNER/REPO/releases/download/dictionary-feed/dictionary-manifest.json"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" LostFocus="DictionaryManifestUrlTextBox_LostFocus" />
+                                </DockPanel>
+                                <TextBlock x:Name="DictionaryUpdateStatusText" Style="{StaticResource Klavrio.Caption}" Margin="0,12,0,0" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [Updates]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [UpdatesHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,12" />
+                                <CheckBox x:Name="CheckUpdatesOnStartupCheckBox" Content="{Binding [CheckOnStartup]}" Margin="0,0,0,12"
+                                          Checked="CheckUpdatesOnStartupCheckBox_Changed" Unchecked="CheckUpdatesOnStartupCheckBox_Changed" />
+                                <DockPanel LastChildFill="True">
+                                    <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [CheckNow]}" Height="56"
+                                            Style="{StaticResource Klavrio.PrimaryButton}" Click="CheckForUpdatesButton_Click" />
+                                    <TextBox x:Name="UpdateManifestUrlTextBox" materialDesign:HintAssist.Hint="https://example.com/klavrio-update.json"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" LostFocus="UpdateManifestUrlTextBox_LostFocus" />
+                                </DockPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                    <TextBlock x:Name="UpdateStatusText" Style="{StaticResource Klavrio.Caption}" VerticalAlignment="Center" />
+                                    <Button x:Name="OpenUpdateButton" Content="{Binding [OpenUpdate]}" Margin="12,0,0,0" Visibility="Collapsed"
+                                            Style="{StaticResource MaterialDesignFlatButton}" Click="OpenUpdateButton_Click" />
+                                </StackPanel>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [Privacy]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [PrivacyHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,14" />
+                                <WrapPanel>
+                                    <Button Content="{Binding [OpenLogs]}" Margin="0,0,10,10" Style="{StaticResource Klavrio.SecondaryButton}" Click="OpenLogsButton_Click" ToolTip="Open the folder containing normal and crash logs" />
+                                    <Button Content="{Binding [CopyLogs]}" Margin="0,0,10,10" Style="{StaticResource Klavrio.SecondaryButton}" Click="CopyLogPathButton_Click" ToolTip="Copy the current log file path" />
+                                    <Button Content="{Binding [Restore]}" Margin="0,0,0,10" Style="{StaticResource Klavrio.SecondaryButton}" Click="RestoreDefaultsButton_Click" ToolTip="Reset theme, language, startup, behavior, modes, and shortcuts" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Style="{StaticResource Klavrio.Card}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding [Project]}" Style="{StaticResource Klavrio.SectionTitle}" />
+                                <TextBlock Text="{Binding [ProjectHelp]}" Style="{StaticResource Klavrio.Caption}" Margin="0,0,0,14" />
+                                <DockPanel LastChildFill="True">
+                                    <Button DockPanel.Dock="Right" Margin="12,0,0,0" Content="{Binding [OpenGitHub]}" Height="56"
+                                            Style="{StaticResource Klavrio.PrimaryButton}" Click="GitHubButton_Click" />
+                                    <TextBox x:Name="GitHubUrlTextBox" materialDesign:HintAssist.Hint="https://github.com/owner/Klavrio"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}" LostFocus="GitHubUrlTextBox_LostFocus" />
+                                </DockPanel>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2" Margin="20,8,20,12" Background="{DynamicResource Klavrio.StatusBarBrush}" Padding="18,0"
+                CornerRadius="14" BorderBrush="{DynamicResource Klavrio.BorderBrush}" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <materialDesign:PackIcon x:Name="StatusIcon" Kind="CheckCircleOutline" Width="19" Height="19" Margin="0,0,10,0" Foreground="{DynamicResource Klavrio.SuccessBrush}" />
+                <TextBlock x:Name="StatusText" VerticalAlignment="Center" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource Klavrio.SuccessBrush}" TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
