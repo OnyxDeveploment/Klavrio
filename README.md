@@ -7,17 +7,13 @@
 [Official website](https://klavrio.app/) · [GitHub repository](https://github.com/OnyxDeveploment/Klavrio) · [Releases](https://github.com/OnyxDeveploment/Klavrio/releases) · [Report an issue](https://github.com/OnyxDeveploment/Klavrio/issues)
 
 ---
-
 Klavrio is a privacy-focused, offline keyboard-layout correction utility for Windows 10/11, with a native macOS 13+ edition. It can correct recognized words automatically when Space is pressed, or convert text you select in another app with a global shortcut-even if the text was written before Klavrio was opened.
-
 > **Windows:** The main edition uses WPF and Material Design 3. **macOS:** The native SwiftUI edition lives in [`macOS/Klavrio`](macOS/Klavrio); see its [build guide](macOS/Klavrio/README.md). Building the macOS edition requires a Mac with Xcode.
 
 <p align="center">
   <a href="Images/Home.png"><img src="Images/Home.png" alt="Klavrio Home screen showing automatic correction and selected-text tools" width="900"></a>
 </p>
-
 ## Highlights
-
 - Responsive Material Design 3 interface with a modern navigation rail, adaptive compact layout, dark/light themes, subtle motion, elevated surfaces, Material icons, tooltips, and a Windows tray experience
 - Localized interface and keyboard-layout maps for English, Hebrew, Arabic, Russian, German, and French
 - Custom global shortcuts for selected-text conversion and for toggling automatic correction
@@ -31,9 +27,7 @@ Klavrio is a privacy-focused, offline keyboard-layout correction utility for Win
 - Local text processing only-no account, telemetry, or cloud text API; network access is limited to update metadata, approved dictionary packages, and Windows release downloads that you confirm, never typed text
 - Structured lifecycle, success, warning, and error logs with separate fatal crash reports
 - Typed and selected text are never written to diagnostics
-
 ## Screenshots
-
 <table>
   <tr>
     <td width="50%" align="center"><a href="Images/Home1.png"><img src="Images/Home1.png" alt="Klavrio safe local preview"></a></td>
@@ -58,9 +52,7 @@ Klavrio is a privacy-focused, offline keyboard-layout correction utility for Win
     <td colspan="2" align="center"><strong>Trusted updates and diagnostics</strong><br><sub>Official read-only feeds, community contributions, logs, and privacy controls.</sub></td>
   </tr>
 </table>
-
 Click any screenshot to view it at full size.
-
 ## Build
 
 Install the .NET 8 SDK on Windows, then run:
@@ -74,19 +66,12 @@ For a self-contained x64 release, run [`Build_Release.bat`](Build_Release.bat). 
 ```text
 bin\Release\net8.0-windows\Klavrio.exe
 ```
-
 The release remains a small folder rather than a lone file. The `Data` and `ThirdParty` folders, `LICENSE`, and `THIRD_PARTY_NOTICES.txt` are placed beside the self-contained executable. Keep the complete folder together when distributing Klavrio.
-
 If `Klavrio.exe` is copied by itself, its embedded dictionaries and legal notices are restored automatically on first launch. Klavrio creates `Data`, `ThirdParty`, `LICENSE`, and `THIRD_PARTY_NOTICES.txt` beside the executable. When that location is read-only, the dictionaries use `%LOCALAPPDATA%\Klavrio\BundledData` and the notices use `%LOCALAPPDATA%\Klavrio\Legal`.
-
 An ordinary Visual Studio **Build** also uses `bin\Release\net8.0-windows`, but produces a smaller framework-dependent executable plus DLL files. A default `dotnet publish -r win-x64` creates the standard `win-x64\publish` subtree instead. The supplied release script overrides that publish location so the current self-contained executable is always at the direct path above. Exit Klavrio from the notification area before building so Windows is not locking the EXE.
-
 Open [`Klavrio.slnx`](Klavrio.slnx) in Visual Studio, or build [`Klavrio.csproj`](Klavrio.csproj) directly from the command line.
-
 On launch, Klavrio creates or repairs current-user shortcuts on the desktop and in the Start Menu. It never writes to the all-users desktop or Start Menu, so this does not require administrator access. The **Start with Windows** setting keeps a `shell:startup` shortcut and the current-user Registry Run entry synchronized. The single-instance guard quietly ignores the duplicate launch that these two startup mechanisms can generate.
-
 ## Use
-
 ### Fix selected text
 
 1. Highlight text in Notepad or another desktop app that supports normal copy and paste.
@@ -94,54 +79,42 @@ On launch, Klavrio creates or repairs current-user shortcuts on the desktop and 
 3. Klavrio temporarily copies the selection, converts it, types the result, and restores the previous clipboard data on a best-effort basis.
 
 Modes:
-
 - **Smart auto · mixed text** preserves recognized correct words and only applies a unique dictionary-backed or reviewed exact match.
 - **Convert to…** modes map physical key positions to English, Hebrew, Arabic, Russian, German, or French.
 
 This workflow also fixes text written before Klavrio was opened: launch Klavrio, select the existing text, and press the selected-text shortcut. Klavrio does not need to record previous keystrokes.
-
 Click either shortcut button in the app and press a new key combination to customize it. Function keys F1–F24 may be used alone; other keys require Ctrl, Alt, or Shift. Windows rejects shortcuts already owned by another app, and Klavrio keeps the previous working shortcut in that case.
 
 Use **Restore defaults** under Settings to reset language, theme, startup behavior, automatic correction, selection mode, shortcuts, and close-to-tray behavior. Klavrio asks for confirmation first.
-
 ### Automatic correction
 
 Turn on **Automatic correction** to check the bounded word immediately before Space. Klavrio only changes an exact dictionary-backed candidate. The default toggle shortcut is `Ctrl + Alt + Space`.
 
 This feature is off on first launch. Your choice is remembered.
-
 ## Privacy and safety
 
 Klavrio does not transmit or log typed words or selected text. By default, it can check the official GitHub community-dictionary and application-update manifests when it opens; either check can be disabled in Settings. These requests contain no typed or selected text. Diagnostics contain timestamps, anonymous session IDs, lifecycle events, operation outcome, app/runtime versions, and exception details.
-
 Logs use short local timestamps, aligned severity labels, readable fields, and a clearly separated header for every application session. Exception stack traces are indented below their event instead of being compressed into one line. Logs are stored at:
 
 ```text
 %LOCALAPPDATA%\Klavrio\Logs\klavrio.log
 ```
-
 The main log rotates at 2 MB. When upgrading from the older dense format, Klavrio preserves it as `klavrio-legacy-*.log` and starts a clean readable log. Fatal errors also create a timestamped `crash-*.log`; crash reports older than 30 days are removed at startup.
-
 Password detection is best-effort and only reliable for some native Windows controls. Browsers, terminals, elevated apps, games, remote desktops, and custom editors may block or behave differently with global hooks and injected input. Keep automatic correction off in sensitive fields, test with Notepad first, and use Ctrl+Z if an editor produces an unexpected result.
-
-Klavrio ships one normalized, deduplicated word-list file per supported language. The reviewed 100K English/Hebrew pack and the useful Hebrew subset of the multilingual name pack have been consolidated into those files; unrelated broad name lists were deliberately excluded to avoid weakening detection. Exact Hebrew keyboard pairs and phonetic mappings remain separate and take priority, fixing `nv t,v eurt` → `מה אתה קורא` and `VHH ma kore` → `היי מה קורה`. Priority metadata prevents low-confidence generated Hebrew words from being applied by the background automatic mode.
-
+Klavrio ships one normalized, deduplicated word-list file per supported language. The reviewed 100K English/Hebrew pack and the useful Hebrew subset of the multilingual name pack have been consolidated into those files; unrelated broad name lists were deliberately excluded to avoid weakening detection. Exact Hebrew keyboard pairs and phonetic mappings remain separate and take priority, fixing `nv t,v eurt` → `מה אתה קורא` and `VHH ma kore` → `היי מה קורה`.
+Priority metadata prevents low-confidence generated Hebrew words from being applied by the background automatic mode.
 For manual additions, open **Settings → Custom dictionaries → Open custom data**. These files live under `%LOCALAPPDATA%\Klavrio\CustomData`, are never replaced by publishing a new build, and override bundled mappings. Add one word per line or follow the TSV examples, save, then press **Reload dictionaries**-no restart is required.
-
 ## Community dictionary updates
 
 French, German, Arabic, and Russian include consolidated LibreOffice/Hunspell-derived word lists. Their pinned source revision, attributions, and separate data licenses are recorded in `Data/COMMUNITY_DICTIONARY_LICENSES.txt`; the reproducible import and consolidation tools are `tools/Import-LibreOfficeDictionaries.ps1` and `tools/Merge-BundledDictionaryData.ps1`.
-
-Contributors can add words through GitHub pull requests by following [CONTRIBUTING.md](CONTRIBUTING.md). The dictionary workflow validates UTF-8, duplicate entries, required language coverage, and TSV structure on every pull request. After you approve and merge a change into `main`, GitHub Actions automatically creates an immutable dictionary ZIP, publishes a human-readable `.sha256` checksum, and refreshes a stable manifest. Klavrio's official feed URL is read-only in Settings; the update check itself can be disabled:
-
+Contributors can add words through GitHub pull requests by following [CONTRIBUTING.md](CONTRIBUTING.md). The dictionary workflow validates UTF-8, duplicate entries, required language coverage, and TSV structure on every pull request. After you approve and merge a change into `main`, GitHub Actions automatically creates an immutable dictionary ZIP, publishes a human-readable `.sha256` checksum, and refreshes a stable manifest.
+Klavrio's official feed URL is read-only in Settings; the update check itself can be disabled:
 ```text
 https://github.com/OnyxDeveploment/Klavrio/releases/download/dictionary-feed/dictionary-manifest.json
 ```
 
 Klavrio verifies the manifest, HTTPS package URL, SHA-256 hash, expanded size, safe filenames, and UTF-8 content before atomically installing the package under `%LOCALAPPDATA%\Klavrio\CommunityData`. User files in `CustomData` still load last and override community mappings. A failed check or package never replaces the last working local data.
-
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contributor and maintainer setup, including the required protected-branch review/check configuration.
-
 ## Application update manifest
 
 The update checker uses this official, read-only repository URL:
@@ -151,22 +124,17 @@ https://github.com/OnyxDeveploment/Klavrio/blob/main/klavrio-update.json
 ```
 
 The repository-root [`klavrio-update.json`](klavrio-update.json) is the update manifest. Klavrio reads the file contents through GitHub's API, compares all four version parts, and asks before downloading a newer version. The manifest intentionally contains only the new version and its download URL:
-
 ```json
 {
   "version": "1.0.0.1",
   "url": "https://github.com/OnyxDeveploment/Klavrio/releases/download/v1.0.0.1/Klavrio.exe"
 }
 ```
-
-When a newer version is found, Klavrio uses the executable URL supplied by the JSON instead of constructing a release tag or download path. For direct GitHub release assets, it derives the matching GitHub API request from that URL, obtains the asset size and SHA-256 digest, and verifies the download and its embedded file version before installation. It then keeps a rollback copy, replaces the executable, and restarts. Manifest responses are limited to 64 KB, GitHub metadata to 256 KB, and executable downloads to 300 MB. A code-signing certificate is still recommended because SHA-256 integrity checking does not replace publisher identity signing.
-
+When a newer version is found, Klavrio uses the executable URL supplied by the JSON instead of constructing a release tag or download path. For direct GitHub release assets, it derives the matching GitHub API request from that URL, obtains the asset size and SHA-256 digest, and verifies the download and its embedded file version before installation. It then keeps a rollback copy, replaces the executable, and restarts.
+Manifest responses are limited to 64 KB, GitHub metadata to 256 KB, and executable downloads to 300 MB. A code-signing certificate is still recommended because SHA-256 integrity checking does not replace publisher identity signing.
 No GitHub Action is required for application updates. The release build updates the repository-root `klavrio-update.json` and also keeps a copy under `artifacts/application-update`. Upload `Klavrio.exe` to its matching release first, then commit and push the generated root JSON to `main`. Full release instructions are in [CONTRIBUTING.md](CONTRIBUTING.md#application-release-feed).
-
 Klavrio uses four-part versions: the published version is `1.0.0.0`, followed by `1.0.0.1`, `1.0.0.2`, and so on. Build a release with a matching embedded version by running `Build_Release.bat 1.0.0.1`, then publish it with the matching Git tag `v1.0.0.1`. Running the script without an argument uses the version declared in `Klavrio.csproj`.
-
 ## Project map
-
 - [`App.xaml`](App.xaml) / [`App.xaml.cs`](App.xaml.cs) - WPF startup, Material Design theme resources, and crash handling
 - [`MainWindow.xaml`](MainWindow.xaml) - Material Design 3 interface
 - [`MainWindow.xaml.cs`](MainWindow.xaml.cs) - tray lifecycle, settings, shortcuts, and selection workflow
@@ -189,7 +157,6 @@ Klavrio uses four-part versions: the published version is `1.0.0.0`, followed by
 - [`WinApi.cs`](WinApi.cs) - scoped Windows interop
 - [`Assets`](Assets) - Klavrio logo PNG and multi-resolution Windows icon
 - [`tools`](tools) / [`.github/workflows`](.github/workflows) - reproducible dictionary import, validation, packaging, and post-merge feed publishing
-
 ## Current limitations
 
 - Klavrio repairs keyboard-layout mistakes; it is not a spelling or grammar checker.
@@ -197,22 +164,24 @@ Klavrio uses four-part versions: the published version is `1.0.0.0`, followed by
 - Rich or delayed clipboard formats may not always restore perfectly.
 - `SendInput` cannot write into a higher-integrity/elevated target from a normal process.
 - Automatic correction evaluates individual words, not full sentence context. Explicit selected-text conversion is available when no dictionary match exists.
-
 ## Acknowledgements
 
 Klavrio is possible thanks to the people and projects whose work it uses:
-
 - Special thanks to **Kevin Atkinson and the SCOWL contributors**, **Alan Beale**, and every upstream word-list author and maintainer credited in [`Data/THIRD_PARTY_LICENSE.txt`](Data/THIRD_PARTY_LICENSE.txt). Their work provides the foundation for the English dictionary data.
 - Thank you to the **LibreOffice and Hunspell dictionary maintainers** and the Arabic, German, French, and Russian dictionary contributors credited in [`Data/COMMUNITY_DICTIONARY_LICENSES.txt`](Data/COMMUNITY_DICTIONARY_LICENSES.txt).
 - The Windows interface uses the **Material Design In XAML Toolkit** by James Willock, Mulholland Software, and its contributors, together with **Material Design Icons** from Pictogrammers.
 - Windows builds use **.NET and WPF**, **Microsoft.Xaml.Behaviors.Wpf**, **Fody**, and **Costura.Fody**. Their copyright notices and full license texts are preserved in [`THIRD_PARTY_NOTICES.txt`](THIRD_PARTY_NOTICES.txt) and the [`ThirdParty`](ThirdParty) folder.
 - Development also relies on tools and services including the .NET SDK, C#, MSBuild, PowerShell, Swift, SwiftUI, Xcode, GitHub, and GitHub Actions. They remain the property of their respective rights holders; this acknowledgement does not imply endorsement.
 - Thank you to everyone who reports problems, improves mappings, or contributes reviewed words to Klavrio.
-
 Third-party software, tools, services, and data keep their original ownership and licenses; the Klavrio project license does not replace them. The macOS package currently declares no third-party Swift package dependencies, and the website uses no third-party runtime framework, external font, or analytics library.
-
 ## License
 
-Klavrio's original code, documentation, and artwork are available under the [Klavrio Noncommercial Share-Alike License 1.0](LICENSE). You may use, study, modify, and redistribute them for noncommercial purposes, but distributed modified versions must remain under the same license and include their corresponding source. Commercial use requires a separate written license from the relevant copyright holder or holders.
+Copyright (c) 2026 onyxdeveploment. The name "onyxdeveploment" is a public pseudonym of the human copyright holder, not a separate legal entity.
 
-This is a source-available license, not an OSI-approved open-source license. Bundled dictionaries, word lists, package dependencies, and other third-party materials keep their own licenses. See [`THIRD_PARTY_NOTICES.txt`](THIRD_PARTY_NOTICES.txt), [`Data/THIRD_PARTY_LICENSE.txt`](Data/THIRD_PARTY_LICENSE.txt), and [`Data/COMMUNITY_DICTIONARY_LICENSES.txt`](Data/COMMUNITY_DICTIONARY_LICENSES.txt) for the applicable notices.
+Unless expressly stated otherwise, Klavrio's original source code, original project documentation, and original project assets for which the relevant copyright holder has licensing authority are licensed under the **GNU General Public License version 3 only (GPL-3.0-only)**. See [LICENSE](LICENSE) for the complete, unmodified license text.
+
+You may use, study, modify, and redistribute the covered material, including for commercial purposes, subject to the terms of GPLv3. When distributing a covered modified work, you must comply with GPLv3 requirements for notices, licensing, and corresponding source code. GPLv3 does not require publishing private modifications that are not conveyed to others.
+
+Copyright ownership remains with the respective copyright holders. Applying GPLv3 to the original project materials does not grant trademark rights or relicense third-party materials.
+
+Bundled dictionaries, word lists, package dependencies, and other third-party materials keep their own licenses. See [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt), [Data/THIRD_PARTY_LICENSE.txt](Data/THIRD_PARTY_LICENSE.txt), and [Data/COMMUNITY_DICTIONARY_LICENSES.txt](Data/COMMUNITY_DICTIONARY_LICENSES.txt) for their notices and terms.
